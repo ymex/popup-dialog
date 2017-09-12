@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,6 +8,7 @@
     android:background="@android:color/white"
     android:gravity="center"
     android:orientation="vertical"
+    android:paddingBottom="6dip"
     android:paddingLeft="24dip"
     android:paddingRight="24dip"
     android:paddingTop="16dip">
@@ -21,17 +21,17 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="通知"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:id="@id/notice_dialog_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="4dip"
-        android:textSize="14sp"
-        tools:text="Popupdialog 更灵活添加布局。写好布局便可以链式调用。"/>
+        android:textSize="16sp"
+        tools:text="Popupdialog 更灵活添加布局。写好布局便可以链式调用。" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,26 +42,30 @@
             android:id="@id/notice_dialog_button_cancel"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dip"
             android:layout_gravity="right"
             android:layout_weight="1"
             android:background="@null"
+            android:gravity="left|center_vertical"
             android:text="取消"
-            android:visibility="gone"
+            android:paddingLeft="8dip"
             android:textColor="@drawable/selector_button_text"
-            android:textSize="14sp"/>
+            android:textSize="16sp"
+            android:visibility="invisible" />
 
         <Button
             android:id="@id/notice_dialog_button_ok"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dip"
             android:layout_gravity="right"
             android:layout_weight="1"
             android:background="@null"
+            android:gravity="right|center_vertical"
             android:text="确定"
+            android:paddingRight="8dip"
             android:textColor="@drawable/selector_button_text"
-            android:textSize="14sp"/>
+            android:textSize="16sp" />
     </LinearLayout>
 
 

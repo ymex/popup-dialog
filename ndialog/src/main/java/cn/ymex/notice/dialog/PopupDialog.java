@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
@@ -26,7 +27,7 @@ public class PopupDialog extends PopupWindow {
     private Context mContext;
 
     private PopupDialog(Context context) {
-        this(context, R.style.pulse_in_out);
+        this(context, R.style.fade_in_out);
     }
 
 
@@ -42,7 +43,7 @@ public class PopupDialog extends PopupWindow {
         this.setContentView(this.mRootView);
         this.setWidth(FrameLayout.LayoutParams.MATCH_PARENT);
         this.setHeight(FrameLayout.LayoutParams.MATCH_PARENT);
-        this.setAnimationStyle(anim);
+        //this.setAnimationStyle(anim);
         this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
         this.setOutsideTouchable(true);
         this.setFocusable(true);
@@ -199,6 +200,7 @@ public class PopupDialog extends PopupWindow {
 
     public void show() {
         this.showAtLocation(mRootView, ViewGroup.LayoutParams.MATCH_PARENT, 0, 0);
+        this.contextView.startAnimation(AnimationUtils.loadAnimation(this.mContext, R.anim.pulse_modal_in));
     }
 
 
