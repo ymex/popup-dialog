@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="24dip"
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="24dip"
+    android:paddingRight="24dip"
+    android:paddingTop="16dip">
+
+    <TextView
+        android:id="@id/notice_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dip"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="通知"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@id/notice_dialog_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="4dip"
+        android:textSize="14sp"
+        tools:text="Popupdialog 更灵活添加布局。写好布局便可以链式调用。"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@id/notice_dialog_button_cancel"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="取消"
+            android:visibility="gone"
+            android:textColor="@drawable/selector_button_text"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@id/notice_dialog_button_ok"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="确定"
+            android:textColor="@drawable/selector_button_text"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+
+</LinearLayout>
