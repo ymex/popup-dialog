@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="divier">1px</dimen>
+    <dimen name="dialog_margin">32dip</dimen>
+    <dimen name="dialog_padding">24dip</dimen>
+    <dimen name="normal_margin">8dip</dimen>
+    <dimen name="normal_padding">8dip</dimen>
+    <dimen name="large_margin">16dip</dimen>
+    <dimen name="large_padding">16dip</dimen>
+    <dimen name="font_normal_size">14sp</dimen>
+    <dimen name="font_large_size">16sp</dimen>
+</resources>

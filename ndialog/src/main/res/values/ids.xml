@@ -4,4 +4,5 @@
     <item  type="id" name="notice_dialog_message"/>
     <item  type="id" name="notice_dialog_button_cancel"/>
     <item  type="id" name="notice_dialog_button_ok"/>
+    <item  type="id" name="notice_dialog_divier_line"/>
 </resources>

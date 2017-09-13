@@ -2,17 +2,22 @@ package cn.ymex.notice.dialog;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.AnimRes;
+import android.support.annotation.AnimatorRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.TypedArrayUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
@@ -22,28 +27,40 @@ import android.widget.PopupWindow;
  */
 
 public class PopupDialog extends PopupWindow {
+    // TODO: 2017/9/13 增加对话框管理功能
+
     private ViewGroup mRootView;
     private View contextView;
     private Context mContext;
+    private Animation inAnimation;
+    private Animation outAnimation;
+
 
     private PopupDialog(Context context) {
-        this(context, R.style.fade_in_out);
+        this(context, R.anim.pulse_modal_in);
     }
 
 
-    private PopupDialog(Context context, int anim) {
+    private PopupDialog(Context context, @AnimRes int anim) {
         super(context);
-        this.mContext = context;
         this.init(context, anim);
     }
 
 
-    private void init(Context context, int anim) {
+    private void init(Context context,@AnimRes int anim) {
+        this.mContext = context;
         this.mRootView = new FrameLayout(context);
+
         this.setContentView(this.mRootView);
+        this.setClippingEnabled(false);
         this.setWidth(FrameLayout.LayoutParams.MATCH_PARENT);
         this.setHeight(FrameLayout.LayoutParams.MATCH_PARENT);
-        //this.setAnimationStyle(anim);
+        try {
+            this.inAnimation = AnimationUtils.loadAnimation(context, anim);
+        } catch (Exception e) {
+            this.inAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_in);
+        }
+        this.outAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_out);
         this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
         this.setOutsideTouchable(true);
         this.setFocusable(true);
@@ -56,6 +73,11 @@ public class PopupDialog extends PopupWindow {
                 }
             }
         });
+    }
+
+    public PopupDialog clippingEnabled(boolean able) {
+        this.setClippingEnabled(able);
+        return this;
     }
 
     /**
@@ -177,8 +199,15 @@ public class PopupDialog extends PopupWindow {
         return this;
     }
 
-    public PopupDialog animation(@StyleRes int anim) {
-        this.setAnimationStyle(anim);
+    public PopupDialog animationIn(@AnimRes int anim) {
+        //this.setAnimationStyle(anim);
+        this.inAnimation = AnimationUtils.loadAnimation(this.mContext,anim);
+        return this;
+    }
+
+    public PopupDialog animationOut(@AnimRes int anim) {
+        //this.setAnimationStyle(anim);
+        this.outAnimation = AnimationUtils.loadAnimation(this.mContext,anim);
         return this;
     }
 
@@ -200,9 +229,31 @@ public class PopupDialog extends PopupWindow {
 
     public void show() {
         this.showAtLocation(mRootView, ViewGroup.LayoutParams.MATCH_PARENT, 0, 0);
-        this.contextView.startAnimation(AnimationUtils.loadAnimation(this.mContext, R.anim.pulse_modal_in));
+        this.contextView.startAnimation(inAnimation);
     }
 
+
+    @Override
+    public void dismiss() {
+
+        outAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                PopupDialog.super.dismiss();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        this.contextView.startAnimation(outAnimation);
+    }
 
     /**
      * 点击事件（默认关闭弹窗）

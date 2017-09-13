@@ -2,6 +2,7 @@ package cn.ymex.notice.dialog;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 /**
- * Created by ymexc on 2017/9/12.
+ * 默认 Alert Dialog
+ *
  */
 
-public class AlertDailogController implements PopupDialog.DailogControlable {
+public class AlerController implements PopupDialog.DailogControlable {
 
     private String mMsg;
     private String mTitle;
@@ -22,29 +24,47 @@ public class AlertDailogController implements PopupDialog.DailogControlable {
     private View.OnClickListener positiveListener;
     private View.OnClickListener negativeListener;
 
+    private int titleGravity = Gravity.LEFT;
+    private int messageGravity = Gravity.LEFT;
+
     private boolean dismiss = true;
 
-    private AlertDailogController(String message) {
+    private AlerController() {
+
+    }
+
+    public static AlerController build() {
+        return new AlerController();
+    }
+
+    public AlerController message(String message) {
         this.mMsg = message;
+        return this;
     }
 
-    public static AlertDailogController message(String message) {
-        return new AlertDailogController(message);
-    }
-
-    public AlertDailogController title(String title) {
+    public AlerController title(String title) {
         this.mTitle = title;
         return this;
     }
 
+    public AlerController titleGravity(int titleGravity) {
+        this.titleGravity = titleGravity;
+        return this;
+    }
+
+    public AlerController messageGravity(int messageGravity) {
+        this.messageGravity = messageGravity;
+        return this;
+    }
+
     //positive
-    public AlertDailogController negativeButton(String text, View.OnClickListener listener) {
+    public AlerController negativeButton(String text, View.OnClickListener listener) {
         this.negativeName = text;
         this.negativeListener = listener;
         return this;
     }
 
-    public AlertDailogController positiveButton(String text, View.OnClickListener listener) {
+    public AlerController positiveButton(String text, View.OnClickListener listener) {
         this.positiveName = text;
         this.positiveListener = listener;
         return this;
@@ -62,14 +82,18 @@ public class AlertDailogController implements PopupDialog.DailogControlable {
             public void onCreated(View layout) {
                 if (!TextUtils.isEmpty(mTitle)) {
                     TextView tvTitle = layout.findViewById(R.id.notice_dialog_title);
+                    tvTitle.setGravity(titleGravity);
                     tvTitle.setText(mTitle);
                     tvTitle.setVisibility(View.VISIBLE);
                 }
                 TextView tvMessage = layout.findViewById(R.id.notice_dialog_message);
+                tvMessage.setGravity(messageGravity);
                 tvMessage.setText(TextUtils.isEmpty(mMsg)?"":mMsg);
 
                 if (!TextUtils.isEmpty(negativeName)) {
                     final Button btnNegative = layout.findViewById(R.id.notice_dialog_button_cancel);
+                    View line = layout.findViewById(R.id.notice_dialog_divier_line);
+                    line.setVisibility(View.VISIBLE);
                     btnNegative.setVisibility(View.VISIBLE);
                     btnNegative.setText(negativeName);
                     btnNegative.setOnClickListener(new View.OnClickListener() {

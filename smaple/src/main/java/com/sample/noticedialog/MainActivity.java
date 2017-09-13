@@ -3,27 +3,28 @@ package com.sample.noticedialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import cn.ymex.notice.dialog.AlertDailogController;
+import cn.ymex.notice.dialog.AlerController;
 import cn.ymex.notice.dialog.PopupDialog;
 
 public class MainActivity extends AppCompatActivity {
 
-    AlertDailogController alertDailogController ;
+    AlerController alerController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        alertDailogController = AlertDailogController
+        alerController = AlerController
+                .build()
+                .title("提醒")
                 .message("登录后才能评论。")
-                .title("广而告之")
                 .negativeButton("取消", null)
                 .positiveButton("确定", null);
+
 
         findViewById(R.id.btn_dialog).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,17 +32,15 @@ public class MainActivity extends AppCompatActivity {
 
 
                 PopupDialog.create(MainActivity.this)
-                        .backgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")))
-                        .controller(alertDailogController)
+                        //.animationIn(R.anim.pulse_modal_in)
+                        //.backgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")))
+                        .controller(alerController)
                         .show();
-
+//                    dialog.show();
             }
         });
-        new AlertDialog.Builder(this)
-                .setTitle("广而告之")
-                .setMessage("登录后才能评论")
-                .setNegativeButton("取消", null)
-                .setPositiveButton("确定", null).show();
+
+
 
     }
 }
