@@ -1,4 +1,4 @@
-package cn.ymex.notice.dialog;
+package cn.ymex.notice.dialog.controller;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import cn.ymex.notice.dialog.PopupDialog;
+import cn.ymex.notice.dialog.R;
+
 /**
  * 默认 Alert Dialog
  *
  */
 
-public class AlerController implements PopupDialog.DialogControlable {
+public class AlerController implements DialogControlable {
 
     private String mMsg;
     private String mTitle;

@@ -9,4 +9,5 @@
     <dimen name="large_padding">16dip</dimen>
     <dimen name="font_normal_size">14sp</dimen>
     <dimen name="font_large_size">16sp</dimen>
+
 </resources>

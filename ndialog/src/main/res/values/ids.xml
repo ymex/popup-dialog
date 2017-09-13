@@ -5,4 +5,6 @@
     <item  type="id" name="notice_dialog_button_cancel"/>
     <item  type="id" name="notice_dialog_button_ok"/>
     <item  type="id" name="notice_dialog_divier_line"/>
+    <item  type="id" name="notice_dialog_dot_progress_v"/>
+    <item  type="id" name="notice_dialog_circle_progress_v"/>
 </resources>

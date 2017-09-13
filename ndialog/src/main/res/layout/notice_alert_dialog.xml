@@ -36,7 +36,7 @@
             android:id="@id/notice_dialog_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="4dip"
+            android:lineSpacingExtra="2dip"
             android:textSize="@dimen/font_large_size"
             tools:text="Popupdialog 更灵活添加布局。写好布局便可以链式调用。"/>
 

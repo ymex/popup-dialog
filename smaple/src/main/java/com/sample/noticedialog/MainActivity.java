@@ -1,11 +1,13 @@
 package com.sample.noticedialog;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import cn.ymex.log.L;
-import cn.ymex.notice.dialog.AlerController;
+import cn.ymex.notice.dialog.controller.AlerController;
 import cn.ymex.notice.dialog.DialogManager;
 import cn.ymex.notice.dialog.PopupDialog;
 
@@ -58,13 +60,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                PopupDialog popupDialog = (PopupDialog) manager.getPriority(FIRST_DIALOG);
-                AlerController aler = (AlerController) popupDialog.getDialogControlable();
-                aler.title("提示")
-                        .message("如果你要调整布局，这时你要重新设置一下popupdialog controller 或 view ");
-                popupDialog.controller(aler);
+//                PopupDialog popupDialog = (PopupDialog) manager.getPriority(FIRST_DIALOG);
+//                AlerController aler = (AlerController) popupDialog.getDialogControlable();
+//                aler.title("提示")
+//                        .message("如果你要调整布局，这时你要重新设置一下popupdialog controller 或 view ");
+//                popupDialog.controller(aler);
+//
+//                manager.show(popupDialog);
 
-                manager.show(popupDialog);
+                PopupDialog.create(MainActivity.this)
+                        //.backgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")))
+                        .view(R.layout.notice_progress_dialog).show();
 
             }
         });

@@ -18,6 +18,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
+import cn.ymex.notice.dialog.controller.DialogControlable;
+
+
 /**
  * popupwindow
  */
@@ -92,7 +95,6 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
         this.contextView = view;
         view.setVisibility(View.VISIBLE);
         view.setClickable(true);
-
         this.mRootView.addView(view);
     }
 
@@ -348,12 +350,6 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     public DialogControlable getDialogControlable() {
         return dialogControlable;
-    }
-
-    public interface DialogControlable {
-        View createView(Context cotext, ViewGroup parent);
-
-        PopupDialog.OnBindViewListener bindView(PopupDialog dialog);
     }
 }
 

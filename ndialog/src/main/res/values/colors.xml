@@ -7,5 +7,6 @@
     <color name="grey_divier">#d7d7db</color>
     <color name="dialog_title">#888888</color>
     <color name="dialog_message">#666666</color>
-
+    <color name="light_blue_400">#29B6F6</color>
+    <color name="light_blue_700">#0288D1</color>
 </resources>
