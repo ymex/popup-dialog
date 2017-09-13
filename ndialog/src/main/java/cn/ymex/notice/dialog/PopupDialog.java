@@ -2,17 +2,13 @@ package cn.ymex.notice.dialog;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.AnimRes;
-import android.support.annotation.AnimatorRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.TypedArrayUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +22,17 @@ import android.widget.PopupWindow;
  * popupwindow
  */
 
-public class PopupDialog extends PopupWindow {
-    // TODO: 2017/9/13 增加对话框管理功能
+public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     private ViewGroup mRootView;
     private View contextView;
     private Context mContext;
+
+    private DialogControlable dialogControlable;
+
     private Animation inAnimation;
     private Animation outAnimation;
+    private int mPriority = 0;//弹出优先级
 
 
     private PopupDialog(Context context) {
@@ -47,7 +46,7 @@ public class PopupDialog extends PopupWindow {
     }
 
 
-    private void init(Context context,@AnimRes int anim) {
+    private void init(Context context, @AnimRes int anim) {
         this.mContext = context;
         this.mRootView = new FrameLayout(context);
 
@@ -61,7 +60,7 @@ public class PopupDialog extends PopupWindow {
             this.inAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_in);
         }
         this.outAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_out);
-        this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
+        this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
         this.setOutsideTouchable(true);
         this.setFocusable(true);
         setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -89,12 +88,11 @@ public class PopupDialog extends PopupWindow {
         if (view == null) {
             throw new IllegalArgumentException("PopupDialog content createView cont allow null!");
         }
+        this.mRootView.removeAllViews();
         this.contextView = view;
         view.setVisibility(View.VISIBLE);
         view.setClickable(true);
-        if (this.mRootView.getChildCount() != 1) {
-            this.mRootView.removeAllViews();
-        }
+
         this.mRootView.addView(view);
     }
 
@@ -166,15 +164,15 @@ public class PopupDialog extends PopupWindow {
     }
 
     /**
-     *
      * @param controlable
      * @return
      */
-    public PopupDialog controller(DailogControlable controlable) {
+    public PopupDialog controller(DialogControlable controlable) {
         if (controlable == null) {
             return this;
         }
-        return view(controlable.createView(this.mContext,this.mRootView), controlable.bindView(this));
+        dialogControlable = controlable;
+        return view(controlable.createView(this.mContext, this.mRootView), controlable.bindView(this));
     }
 
 
@@ -201,13 +199,13 @@ public class PopupDialog extends PopupWindow {
 
     public PopupDialog animationIn(@AnimRes int anim) {
         //this.setAnimationStyle(anim);
-        this.inAnimation = AnimationUtils.loadAnimation(this.mContext,anim);
+        this.inAnimation = AnimationUtils.loadAnimation(this.mContext, anim);
         return this;
     }
 
     public PopupDialog animationOut(@AnimRes int anim) {
         //this.setAnimationStyle(anim);
-        this.outAnimation = AnimationUtils.loadAnimation(this.mContext,anim);
+        this.outAnimation = AnimationUtils.loadAnimation(this.mContext, anim);
         return this;
     }
 
@@ -232,6 +230,11 @@ public class PopupDialog extends PopupWindow {
         this.contextView.startAnimation(inAnimation);
     }
 
+
+    public PopupDialog manageMe(DialogManager manager) {
+        manager.add(this);
+        return this;
+    }
 
     @Override
     public void dismiss() {
@@ -310,13 +313,45 @@ public class PopupDialog extends PopupWindow {
         }
     }
 
+    public PopupDialog priority(int mPriority) {
+        this.mPriority = mPriority;
+        return this;
+    }
+
+    @Override
+    public int priority() {
+        return this.mPriority;
+    }
+
+    @Override
+    public boolean isWorking() {
+        return isShowing();
+    }
+
+    @Override
+    public void hideAway() {
+        if (isShowing()) {
+            this.dismiss();
+        }
+    }
+
+    @Override
+    public void display() {
+        if (!isShowing()) {
+            show();
+        }
+    }
+
     public interface OnBindViewListener {
         void onCreated(View layout);
     }
 
+    public DialogControlable getDialogControlable() {
+        return dialogControlable;
+    }
 
-    public interface DailogControlable {
-        View createView(Context cotext,ViewGroup parent);
+    public interface DialogControlable {
+        View createView(Context cotext, ViewGroup parent);
 
         PopupDialog.OnBindViewListener bindView(PopupDialog dialog);
     }

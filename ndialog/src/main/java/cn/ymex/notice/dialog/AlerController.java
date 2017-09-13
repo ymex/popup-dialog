@@ -14,7 +14,7 @@ import android.widget.TextView;
  *
  */
 
-public class AlerController implements PopupDialog.DailogControlable {
+public class AlerController implements PopupDialog.DialogControlable {
 
     private String mMsg;
     private String mTitle;
@@ -44,6 +44,11 @@ public class AlerController implements PopupDialog.DailogControlable {
 
     public AlerController title(String title) {
         this.mTitle = title;
+        return this;
+    }
+
+    public AlerController clickDismiss(boolean dismiss) {
+        this.dismiss = dismiss;
         return this;
     }
 
@@ -80,19 +85,21 @@ public class AlerController implements PopupDialog.DailogControlable {
         return new PopupDialog.OnBindViewListener() {
             @Override
             public void onCreated(View layout) {
+                TextView tvTitle = layout.findViewById(R.id.notice_dialog_title);
                 if (!TextUtils.isEmpty(mTitle)) {
-                    TextView tvTitle = layout.findViewById(R.id.notice_dialog_title);
                     tvTitle.setGravity(titleGravity);
                     tvTitle.setText(mTitle);
                     tvTitle.setVisibility(View.VISIBLE);
+                }else {
+                    tvTitle.setVisibility(View.GONE);
                 }
                 TextView tvMessage = layout.findViewById(R.id.notice_dialog_message);
                 tvMessage.setGravity(messageGravity);
                 tvMessage.setText(TextUtils.isEmpty(mMsg)?"":mMsg);
 
+                final Button btnNegative = layout.findViewById(R.id.notice_dialog_button_cancel);
+                View line = layout.findViewById(R.id.notice_dialog_divier_line);
                 if (!TextUtils.isEmpty(negativeName)) {
-                    final Button btnNegative = layout.findViewById(R.id.notice_dialog_button_cancel);
-                    View line = layout.findViewById(R.id.notice_dialog_divier_line);
                     line.setVisibility(View.VISIBLE);
                     btnNegative.setVisibility(View.VISIBLE);
                     btnNegative.setText(negativeName);
@@ -108,6 +115,10 @@ public class AlerController implements PopupDialog.DailogControlable {
                         }
                     });
 
+                }else {
+                    btnNegative.setText("");
+                    line.setVisibility(View.GONE);
+                    btnNegative.setVisibility(View.GONE);
                 }
 
                 final Button btnPositive = layout.findViewById(R.id.notice_dialog_button_ok);
