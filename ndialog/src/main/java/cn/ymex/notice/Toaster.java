@@ -1,6 +1,7 @@
 package cn.ymex.notice;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,11 @@ public final class Toaster {
 
     public static void init(Context context){
         if (null == sApplication){
-            sApplication = context;
+            if (context instanceof Activity) {
+                sApplication = ((Activity) context).getApplication();
+            }else {
+                sApplication = context;
+            }
         }
     }
 

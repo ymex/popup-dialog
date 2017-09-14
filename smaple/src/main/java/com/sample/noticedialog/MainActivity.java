@@ -1,6 +1,7 @@
 package com.sample.noticedialog;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -94,5 +95,6 @@ public class MainActivity extends AppCompatActivity {
                         .model(ProgressController.MODE_CIRCLE))
                 .show();
     }
+
 
 }

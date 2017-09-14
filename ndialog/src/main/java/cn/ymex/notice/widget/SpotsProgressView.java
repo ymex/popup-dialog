@@ -1,4 +1,4 @@
-package cn.ymex.notice.dialog.widget;
+package cn.ymex.notice.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

@@ -1,4 +1,4 @@
-package cn.ymex.notice.dialog.widget;
+package cn.ymex.notice.widget;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -27,7 +27,7 @@ import cn.ymex.notice.dialog.R;
 /**
  * @author Silvestr Predko.
  */
-public class DotProgressBar extends View {
+public class DotProgressView extends View {
 
     public static final int RIGHT_DIRECTION = 1;
     public static final int LEFT_DIRECTION = -1;
@@ -72,30 +72,30 @@ public class DotProgressBar extends View {
 
     /**
      * This value detect direction of circle animation direction
-     * {@link DotProgressBar#RIGHT_DIRECTION} and {@link DotProgressBar#LEFT_DIRECTION}
+     * {@link DotProgressView#RIGHT_DIRECTION} and {@link DotProgressView#LEFT_DIRECTION}
      */
     private int animationDirection;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DotProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DotProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initializeAttributes(attrs);
         init();
     }
 
-    public DotProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DotProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeAttributes(attrs);
         init();
     }
 
-    public DotProgressBar(Context context, AttributeSet attrs) {
+    public DotProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializeAttributes(attrs);
         init();
     }
 
-    public DotProgressBar(Context context) {
+    public DotProgressView(Context context) {
         super(context);
         initializeAttributes(null);
         init();
@@ -152,26 +152,26 @@ public class DotProgressBar extends View {
         if (attrs != null) {
             TypedArray a = getContext().getTheme().obtainStyledAttributes(
                     attrs,
-                    R.styleable.DotProgressBar,
+                    R.styleable.DotProgressView,
                     0, 0);
 
             try {
-                setDotAmount(a.getInteger(R.styleable.DotProgressBar_amount, 5));
+                setDotAmount(a.getInteger(R.styleable.DotProgressView_amount, 5));
                 setAnimationTime(animationTime = a.getInteger(
-                        R.styleable.DotProgressBar_duration, (int) animationTime));
+                        R.styleable.DotProgressView_duration, (int) animationTime));
                 setStartColor(
                         a.getInteger(
-                                R.styleable.DotProgressBar_startColor,
+                                R.styleable.DotProgressView_startColor,
                                 ContextCompat.getColor(getContext(), R.color.blue_dark)
                         )
                 );
                 setEndColor(
                         a.getInteger(
-                                R.styleable.DotProgressBar_endColor,
+                                R.styleable.DotProgressView_endColor,
                                 ContextCompat.getColor(getContext(), R.color.blue_light)
                         )
                 );
-                setAnimationDirection(a.getInt(R.styleable.DotProgressBar_animationDirection, 1));
+                setAnimationDirection(a.getInt(R.styleable.DotProgressView_animationDirection, 1));
             } finally {
                 a.recycle();
             }
