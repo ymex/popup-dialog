@@ -10,10 +10,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -84,7 +81,7 @@ public class CircularProgressView extends View {
         // Initialize attributes from styleable attributes
         currentProgress = a.getFloat(R.styleable.CircularProgressView_cpv_progress, 20);
         maxProgress = a.getFloat(R.styleable.CircularProgressView_cpv_maxProgress, 100);
-        thickness = a.getDimensionPixelSize(R.styleable.CircularProgressView_cpv_thickness, 6);
+        thickness = a.getDimensionPixelSize(R.styleable.CircularProgressView_cpv_thickness, 8);
         isIndeterminate = a.getBoolean(R.styleable.CircularProgressView_cpv_indeterminate, true);
         autostartAnimation = a.getBoolean(R.styleable.CircularProgressView_cpv_animAutostart, true);
         initialStartAngle = a.getFloat(R.styleable.CircularProgressView_cpv_startAngle, -90);
@@ -113,7 +110,7 @@ public class CircularProgressView extends View {
 
         animDuration = a.getInteger(R.styleable.CircularProgressView_cpv_animDuration, 4000);
         animSwoopDuration = a.getInteger(R.styleable.CircularProgressView_cpv_animSwoopDuration, 5000);
-        animSyncDuration = a.getInteger(R.styleable.CircularProgressView_cpv_animSyncDuration, 500);
+        animSyncDuration = a.getInteger(R.styleable.CircularProgressView_cpv_animSyncDuration, 350);
         animSteps = a.getInteger(R.styleable.CircularProgressView_cpv_animSteps, 3);
         a.recycle();
     }

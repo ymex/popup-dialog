@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import cn.ymex.notice.dialog.PopupDialog;
+import cn.ymex.notice.dialog.NoticeDialog;
 
 /**
  * Created by ymex on 2017/9/13.
@@ -13,5 +13,5 @@ import cn.ymex.notice.dialog.PopupDialog;
 public interface DialogControlable {
     View createView(Context cotext, ViewGroup parent);
 
-    PopupDialog.OnBindViewListener bindView(PopupDialog dialog);
+    NoticeDialog.OnBindViewListener bindView(NoticeDialog dialog);
 }

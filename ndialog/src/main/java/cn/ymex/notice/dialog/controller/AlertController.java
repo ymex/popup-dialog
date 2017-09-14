@@ -1,6 +1,8 @@
 package cn.ymex.notice.dialog.controller;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,15 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import cn.ymex.notice.dialog.PopupDialog;
+import cn.ymex.notice.dialog.NoticeDialog;
 import cn.ymex.notice.dialog.R;
 
 /**
  * 默认 Alert Dialog
- *
  */
 
-public class AlerController implements DialogControlable {
+public class AlertController implements DialogControlable {
 
     private String mMsg;
     private String mTitle;
@@ -32,73 +33,75 @@ public class AlerController implements DialogControlable {
 
     private boolean dismiss = true;
 
-    private AlerController() {
+    private AlertController() {
 
     }
 
-    public static AlerController build() {
-        return new AlerController();
+    public static AlertController build() {
+        return new AlertController();
     }
 
-    public AlerController message(String message) {
+    public AlertController message(String message) {
         this.mMsg = message;
         return this;
     }
 
-    public AlerController title(String title) {
+    public AlertController title(String title) {
         this.mTitle = title;
         return this;
     }
 
-    public AlerController clickDismiss(boolean dismiss) {
+    public AlertController clickDismiss(boolean dismiss) {
         this.dismiss = dismiss;
         return this;
     }
 
-    public AlerController titleGravity(int titleGravity) {
+    public AlertController titleGravity(int titleGravity) {
         this.titleGravity = titleGravity;
         return this;
     }
 
-    public AlerController messageGravity(int messageGravity) {
+    public AlertController messageGravity(int messageGravity) {
         this.messageGravity = messageGravity;
         return this;
     }
 
     //positive
-    public AlerController negativeButton(String text, View.OnClickListener listener) {
+    public AlertController negativeButton(String text, View.OnClickListener listener) {
         this.negativeName = text;
         this.negativeListener = listener;
         return this;
     }
 
-    public AlerController positiveButton(String text, View.OnClickListener listener) {
+    public AlertController positiveButton(String text, View.OnClickListener listener) {
         this.positiveName = text;
         this.positiveListener = listener;
         return this;
     }
 
     @Override
-    public View createView(Context context,ViewGroup parent) {
+    public View createView(Context context, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.notice_alert_dialog, parent, false);
     }
 
     @Override
-    public PopupDialog.OnBindViewListener bindView(final PopupDialog dialog) {
-        return new PopupDialog.OnBindViewListener() {
+    public NoticeDialog.OnBindViewListener bindView(final NoticeDialog dialog) {
+        return new NoticeDialog.OnBindViewListener() {
             @Override
             public void onCreated(View layout) {
+                dialog.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
+
                 TextView tvTitle = layout.findViewById(R.id.notice_dialog_title);
                 if (!TextUtils.isEmpty(mTitle)) {
                     tvTitle.setGravity(titleGravity);
                     tvTitle.setText(mTitle);
                     tvTitle.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tvTitle.setVisibility(View.GONE);
                 }
                 TextView tvMessage = layout.findViewById(R.id.notice_dialog_message);
                 tvMessage.setGravity(messageGravity);
-                tvMessage.setText(TextUtils.isEmpty(mMsg)?"":mMsg);
+                tvMessage.setText(TextUtils.isEmpty(mMsg) ? "" : mMsg);
 
                 final Button btnNegative = layout.findViewById(R.id.notice_dialog_button_cancel);
                 View line = layout.findViewById(R.id.notice_dialog_divier_line);
@@ -118,7 +121,7 @@ public class AlerController implements DialogControlable {
                         }
                     });
 
-                }else {
+                } else {
                     btnNegative.setText("");
                     line.setVisibility(View.GONE);
                     btnNegative.setVisibility(View.GONE);

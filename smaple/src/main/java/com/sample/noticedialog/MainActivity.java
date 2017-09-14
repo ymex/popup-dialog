@@ -1,15 +1,13 @@
 package com.sample.noticedialog;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import cn.ymex.log.L;
-import cn.ymex.notice.dialog.controller.AlerController;
 import cn.ymex.notice.dialog.DialogManager;
-import cn.ymex.notice.dialog.PopupDialog;
+import cn.ymex.notice.dialog.NoticeDialog;
+import cn.ymex.notice.dialog.controller.AlertController;
+import cn.ymex.notice.dialog.controller.ProgressController;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final AlerController alerController2 = AlerController
+        final AlertController alertController2 = AlertController
                 .build()
                 .title("提醒")
                 .message("登录后才能评论。")
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 .positiveButton("确定", null);
 
 
-        final AlerController alerController = AlerController
+        final AlertController alertController = AlertController
                 .build()
                 .clickDismiss(false)
                 .title("提醒")
@@ -44,39 +42,15 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-        PopupDialog.create(MainActivity.this)
+        NoticeDialog.create(MainActivity.this)
                 .manageMe(manager)
                 .priority(SECOND_DIALOG)
-                .controller(alerController2);
+                .controller(alertController2);
 
-        PopupDialog.create(MainActivity.this)
+        NoticeDialog.create(MainActivity.this)
                 .priority(FIRST_DIALOG)
                 .manageMe(manager)
-                .controller(alerController);
-
-
-        findViewById(R.id.btn_dialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-//                PopupDialog popupDialog = (PopupDialog) manager.getPriority(FIRST_DIALOG);
-//                AlerController aler = (AlerController) popupDialog.getDialogControlable();
-//                aler.title("提示")
-//                        .message("如果你要调整布局，这时你要重新设置一下popupdialog controller 或 view ");
-//                popupDialog.controller(aler);
-//
-//                manager.show(popupDialog);
-
-                PopupDialog.create(MainActivity.this)
-                        //.backgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")))
-                        .view(R.layout.notice_progress_dialog).show();
-
-            }
-        });
-
-        L.tag("---------:::").logD(manager.getDialogs().size());
-
+                .controller(alertController);
 
     }
 
@@ -84,6 +58,41 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        manager.destroy();
+        manager.destroy();//销毁
     }
+
+    public void defalertPppDialog(View view) {
+        NoticeDialog noticeDialog = (NoticeDialog) manager.getPriority(FIRST_DIALOG);
+        AlertController aler = (AlertController) noticeDialog.getDialogControlable();
+        aler.title("提示")
+                .message("如果你要调整布局，这时你要重新设置一下popupdialog controller 或 view ");
+        noticeDialog.controller(aler);
+        manager.show(noticeDialog);
+    }
+
+
+    /**
+     * 默认对话框
+     */
+    public void defalertDialog(View view) {
+        NoticeDialog.create(this)
+                .controller(AlertController.build()
+                        .title("提醒")
+                        .message("登录后才能评论。")
+                        .negativeButton("取消", null)
+                        .positiveButton("确定", null))
+                .show();
+    }
+
+    /**
+     * 默认进度框 ProgressController.MODE_CIRCLE
+     * @param view
+     */
+    public void progressDialog(View view) {
+        NoticeDialog.create(this)
+                .controller(ProgressController.build().message("loading ... ")
+                        .model(ProgressController.MODE_CIRCLE))
+                .show();
+    }
+
 }

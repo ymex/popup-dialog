@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_margin="@dimen/dialog_margin"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <LinearLayout
-        android:visibility="gone"
-        android:id="@id/notice_dialog_dot_progress_v"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_notice_alert_dialog"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dip">
 
-        <cn.ymex.notice.dialog.widget.DotProgressBar
-            android:layout_width="72dip"
-            android:layout_height="16dip"
-            app:amount="4" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@id/notice_dialog_circle_progress_v"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_notice_alert_dialog"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="16dip">
-
-        <cn.ymex.notice.dialog.widget.CircularProgressView
-            android:layout_width="32dip"
-            android:layout_height="32dip"
-            app:cpv_progress="50" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/normal_margin"
-            android:maxLines="1"
-            android:text="加载中..." />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <cn.ymex.notice.dialog.widget.CircularProgressView
+                android:id="@id/notice_dialog_circle_progress"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                app:cpv_progress="50"/>
+
+            <TextView
+                android:id="@id/notice_dialog_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dip"
+                android:paddingRight="4dip"
+                android:text="@string/notice_dialog_loading"/>
+
+            <cn.ymex.notice.dialog.widget.DotProgressBar
+                android:id="@id/notice_dialog_dot_progress"
+                android:layout_width="48dip"
+                android:layout_height="16dip"
+                app:amount="4"/>
+        </LinearLayout>
+
+        <cn.ymex.notice.dialog.widget.SpotsProgressView
+            android:id="@id/notice_dialog_spot_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"/>
+
     </LinearLayout>
 
 

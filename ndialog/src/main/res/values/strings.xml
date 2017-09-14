@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">noticedialog</string>
+    <string name="notice_dialog_loading">loading...</string>
 </resources>

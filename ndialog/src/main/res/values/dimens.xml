@@ -10,4 +10,8 @@
     <dimen name="font_normal_size">14sp</dimen>
     <dimen name="font_large_size">16sp</dimen>
 
+    <dimen name="spot_size">8dp</dimen>
+    <dimen name="spot_progress_margin">24dp</dimen>
+    <dimen name="spot_progress_width">240dp</dimen>
+
 </resources>

@@ -47,7 +47,7 @@ public class DotProgressBar extends View {
     /**
      * Animation tools
      */
-    private long animationTime;
+    private long animationTime = 300;
     private float animatedRadius;
     private boolean isFirstLaunch = true;
     private ValueAnimator startValueAnimator;
@@ -129,6 +129,8 @@ public class DotProgressBar extends View {
         bounceDotRadius = dotRadius + (dotRadius / 3);
         float circlesWidth = (dotAmount * (dotRadius * 2)) + dotRadius * (dotAmount - 1);
         xCoordinate = (width - circlesWidth) / 2 + dotRadius;
+
+
     }
 
     private int measureHeight(int measureSpec) {
@@ -156,9 +158,7 @@ public class DotProgressBar extends View {
             try {
                 setDotAmount(a.getInteger(R.styleable.DotProgressBar_amount, 5));
                 setAnimationTime(animationTime = a.getInteger(
-                        R.styleable.DotProgressBar_duration,
-                        getResources().getInteger(android.R.integer.config_mediumAnimTime)
-                ));
+                        R.styleable.DotProgressBar_duration, (int) animationTime));
                 setStartColor(
                         a.getInteger(
                                 R.styleable.DotProgressBar_startColor,
@@ -178,7 +178,7 @@ public class DotProgressBar extends View {
 
         } else {
             setDotAmount(5);
-            setAnimationTime(getResources().getInteger(android.R.integer.config_mediumAnimTime));
+            setAnimationTime(animationTime);
             setStartColor(ContextCompat.getColor(getContext(), R.color.blue_dark));
             setEndColor(ContextCompat.getColor(getContext(), R.color.blue_light));
             setAnimationDirection(1);

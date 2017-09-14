@@ -23,4 +23,9 @@
     <attr name="cpv_animSteps" format="integer" />
     <attr name="cpv_startAngle" format="float" />
   </declare-styleable>
+
+  <declare-styleable name="SpotsProgressView">
+    <attr name="spot_color" format="reference|color"/>
+    <attr name="spot_count" format="integer"/>
+  </declare-styleable>
 </resources>

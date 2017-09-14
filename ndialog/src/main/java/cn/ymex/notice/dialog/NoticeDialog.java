@@ -5,10 +5,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.AnimRes;
+import android.support.annotation.AttrRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +32,7 @@ import cn.ymex.notice.dialog.controller.DialogControlable;
  * popupwindow
  */
 
-public class PopupDialog extends PopupWindow implements DialogManager.Priority {
+public class NoticeDialog extends PopupWindow implements DialogManager.Priority {
 
     private ViewGroup mRootView;
     private View contextView;
@@ -37,13 +44,16 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
     private Animation outAnimation;
     private int mPriority = 0;//弹出优先级
 
+    private boolean outsideTouchHide = true;
+    private boolean backPressedHide = true;
 
-    private PopupDialog(Context context) {
+
+    private NoticeDialog(Context context) {
         this(context, R.anim.pulse_modal_in);
     }
 
 
-    private PopupDialog(Context context, @AnimRes int anim) {
+    private NoticeDialog(Context context, @AnimRes int anim) {
         super(context);
         this.init(context, anim);
     }
@@ -51,7 +61,8 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     private void init(Context context, @AnimRes int anim) {
         this.mContext = context;
-        this.mRootView = new FrameLayout(context);
+        this.mRootView = new DocFrameLayout(context);
+
 
         this.setContentView(this.mRootView);
         this.setClippingEnabled(false);
@@ -63,21 +74,31 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
             this.inAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_in);
         }
         this.outAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_out);
-        this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
-        this.setOutsideTouchable(true);
-        this.setFocusable(true);
+        this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
+
+
+        this.setOutsideTouchable(backPressedHide);
+        this.setFocusable(backPressedHide);
+
+
         setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         this.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isOutsideTouchable()) {
+                if (outsideTouchHide) {
                     dismiss();
                 }
             }
         });
+
+
+        //this.mRootView.setFocusable(true);
+        this.getContentView().setFocusableInTouchMode(true);
+
     }
 
-    public PopupDialog clippingEnabled(boolean able) {
+
+    public NoticeDialog clippingEnabled(boolean able) {
         this.setClippingEnabled(able);
         return this;
     }
@@ -89,7 +110,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
      */
     public void addView(View view) {
         if (view == null) {
-            throw new IllegalArgumentException("PopupDialog content createView cont allow null!");
+            throw new IllegalArgumentException("NoticeDialog content createView cont allow null!");
         }
         this.mRootView.removeAllViews();
         this.contextView = view;
@@ -128,18 +149,18 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
     }
 
 
-    public static PopupDialog create(Context context) {
+    public static NoticeDialog create(Context context) {
         if (!(context instanceof Activity)) {
             throw new IllegalArgumentException("context is an invalid type!");
         }
-        return new PopupDialog(context);
+        return new NoticeDialog(context);
     }
 
-    public static PopupDialog create(Fragment fragment) {
+    public static NoticeDialog create(Fragment fragment) {
         return create(fragment.getActivity());
     }
 
-    public static PopupDialog create(android.app.Fragment fragment) {
+    public static NoticeDialog create(android.app.Fragment fragment) {
         return create(fragment.getActivity());
     }
 
@@ -150,7 +171,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
      * @param layout 布局
      * @return
      */
-    public PopupDialog view(@LayoutRes int layout) {
+    public NoticeDialog view(@LayoutRes int layout) {
         return view(layout, null);
     }
 
@@ -159,9 +180,9 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
      *
      * @param layout             布局
      * @param onBindViewListener 添加布局后回调
-     * @return PopupDialog
+     * @return NoticeDialog
      */
-    public PopupDialog view(@LayoutRes int layout, OnBindViewListener onBindViewListener) {
+    public NoticeDialog view(@LayoutRes int layout, OnBindViewListener onBindViewListener) {
         return view(LayoutInflater.from(this.mContext).inflate(layout, this.mRootView, false), onBindViewListener);
     }
 
@@ -169,7 +190,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
      * @param controlable
      * @return
      */
-    public PopupDialog controller(DialogControlable controlable) {
+    public NoticeDialog controller(DialogControlable controlable) {
         if (controlable == null) {
             return this;
         }
@@ -178,51 +199,143 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
     }
 
 
-    public PopupDialog view(View view) {
+    public NoticeDialog view(View view) {
         return view(view, null);
     }
 
 
-    public PopupDialog view(View view, OnBindViewListener onBindViewListener) {
+    public NoticeDialog view(View view, OnBindViewListener onBindViewListener) {
         this.addView(view);
         setBindViewListener(onBindViewListener);
         return this;
     }
 
-    public PopupDialog width(int w) {
+    public NoticeDialog width(int w) {
         this.setWidth(w);
         return this;
     }
 
-    public PopupDialog height(int h) {
+    public NoticeDialog height(int h) {
         this.setHeight(h);
         return this;
     }
 
-    public PopupDialog animationIn(@AnimRes int anim) {
-        //this.setAnimationStyle(anim);
+    /**
+     * show 动画
+     *
+     * @param anim
+     * @return
+     */
+    public NoticeDialog animationIn(@AnimRes int anim) {
         this.inAnimation = AnimationUtils.loadAnimation(this.mContext, anim);
         return this;
     }
 
-    public PopupDialog animationOut(@AnimRes int anim) {
+    /**
+     * dismiss 动画
+     *
+     * @param anim
+     * @return
+     */
+    public NoticeDialog animationOut(@AnimRes int anim) {
         //this.setAnimationStyle(anim);
         this.outAnimation = AnimationUtils.loadAnimation(this.mContext, anim);
         return this;
     }
 
-    public PopupDialog backgroundDrawable(Drawable drawable) {
+    /**
+     * 全屏背景
+     *
+     * @param drawable
+     * @return
+     */
+    public NoticeDialog backgroundDrawable(Drawable drawable) {
         this.setBackgroundDrawable(drawable);
         return this;
     }
 
-    public PopupDialog outsideTouchable(boolean touchable) {
-        this.setOutsideTouchable(touchable);
+    /**
+     * 点击外部 是否隐藏
+     *
+     * @param touchable true hide
+     * @return NoticeDialog
+     */
+    public NoticeDialog outsideTouchHide(boolean touchable) {
+        this.outsideTouchHide = touchable;
         return this;
     }
 
-    public PopupDialog focusable(boolean focus) {
+
+    /**
+     * 返回键是否隐藏
+     *
+     * @param backPressedHide true hide
+     * @return NoticeDialog
+     */
+    public NoticeDialog backPressedHide(boolean backPressedHide) {
+        this.backPressedHide = backPressedHide;
+        this.setOutsideTouchable(this.backPressedHide);
+        this.setFocusable(this.backPressedHide);
+        return this;
+    }
+
+    public NoticeDialog focusable(boolean focus) {
         this.setFocusable(focus);
+        return this;
+    }
+
+    /**
+     * 不建议使用，outsideTouchHide ,backPressedHide
+     *
+     * @param focusable
+     * @deprecated
+     */
+    @Override
+    public void setFocusable(boolean focusable) {
+        super.setFocusable(focusable);
+    }
+
+    /**
+     * 不建议使用，outsideTouchHide ,backPressedHide
+     *
+     * @param touchable
+     * @deprecated
+     */
+    @Override
+    public void setOutsideTouchable(boolean touchable) {
+        super.setOutsideTouchable(touchable);
+    }
+
+
+    /**
+     * 设置 OnDismissListener
+     *
+     * @param onDismissListener Listener
+     * @return NoticeDialog
+     */
+    public NoticeDialog onDismissListener(OnDismissListener onDismissListener) {
+        setOnDismissListener(onDismissListener);
+        return this;
+    }
+
+    /**
+     * 设置 OnShowListener
+     *
+     * @param onShowListener Listener
+     */
+    public void setOnShowListener(OnShowListener onShowListener) {
+        this.onShowListener = onShowListener;
+    }
+
+
+    /**
+     * 设置 OnShowListener
+     *
+     * @param onShowListener Listener
+     * @return NoticeDialog
+     */
+    public NoticeDialog onShowListener(OnShowListener onShowListener) {
+        this.onShowListener = onShowListener;
         return this;
     }
 
@@ -233,7 +346,23 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
     }
 
 
-    public PopupDialog manageMe(DialogManager manager) {
+    @Override
+    public void showAtLocation(View parent, int gravity, int x, int y) {
+        if (onShowListener != null) {
+            onShowListener.onShow(this);
+        }
+        super.showAtLocation(parent, gravity, x, y);
+    }
+
+    @Override
+    public void showAsDropDown(View anchor, int xoff, int yoff, int gravity) {
+        if (onShowListener != null) {
+            onShowListener.onShow(this);
+        }
+        super.showAsDropDown(anchor, xoff, yoff, gravity);
+    }
+
+    public NoticeDialog manageMe(DialogManager manager) {
         manager.add(this);
         return this;
     }
@@ -249,7 +378,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                PopupDialog.super.dismiss();
+                NoticeDialog.super.dismiss();
             }
 
             @Override
@@ -267,7 +396,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
      * @param listener 监听
      * @return this
      */
-    public PopupDialog click(@IdRes int id, View.OnClickListener listener) {
+    public NoticeDialog click(@IdRes int id, View.OnClickListener listener) {
         return click(id, listener, true);
     }
 
@@ -279,7 +408,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
      * @param dismiss  是否关闭弹窗
      * @return this
      */
-    public PopupDialog click(@IdRes int id, final View.OnClickListener listener, final boolean dismiss) {
+    public NoticeDialog click(@IdRes int id, final View.OnClickListener listener, final boolean dismiss) {
 
         find(id).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,7 +444,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
         }
     }
 
-    public PopupDialog priority(int mPriority) {
+    public NoticeDialog priority(int mPriority) {
         this.mPriority = mPriority;
         return this;
     }
@@ -351,5 +480,34 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
     public DialogControlable getDialogControlable() {
         return dialogControlable;
     }
+
+    class DocFrameLayout extends FrameLayout {
+
+        public DocFrameLayout(@NonNull Context context) {
+            super(context);
+        }
+
+        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+    }
+
+
+    private OnShowListener onShowListener;
+
+    public interface OnShowListener {
+        void onShow(NoticeDialog var1);
+    }
+
 }
 
