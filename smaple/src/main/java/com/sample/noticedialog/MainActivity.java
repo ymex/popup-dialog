@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Random;
+
 import cn.ymex.notice.dialog.DialogManager;
 import cn.ymex.notice.dialog.NoticeDialog;
 import cn.ymex.notice.dialog.controller.AlertController;
@@ -107,9 +109,26 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void progressDialog(View view) {
+
+        int mode = ProgressController.MODE_CIRCLE;
+
+
+        Random random = new Random();
+        int num = random.nextInt(3);
+        switch (num) {
+            case 0:
+                mode = ProgressController.MODE_CIRCLE;
+                break;
+            case 1:
+                mode = ProgressController.MODE_DOT;
+                break;
+            case 2:
+                mode = ProgressController.MODE_SPOT;
+                break;
+        }
         NoticeDialog.create(this)
                 .controller(ProgressController.build().message("loading ... ")
-                        .model(ProgressController.MODE_CIRCLE))
+                        .model(mode)).backgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")))
                 .show();
     }
 
@@ -178,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
                     dialog.backgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
 
-                    findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+                    layout.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             EditText etNumber = layout.findViewById(R.id.et_number);

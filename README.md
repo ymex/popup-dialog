@@ -52,34 +52,62 @@ ProgressController 除了默认为系统风格的样式外还定义了其他两�
 定义DialogController是为了方便管理View（或xml布局文件），只需要实现`DialogControlable`接口。如 ProgressController
 
 ```
-public class ProgressController implements DialogControlable {
-  
-    @Override
-    public View createView(Context cotext, ViewGroup parent) {
-        //返回你要展示的View 
-        return LayoutInflater.from(cotext).inflate(R.layout.notice_progress_dialog, parent, false);
+class CustomDialogController implements DialogControllable {
+        @Override
+        public View createView(Context cotext, ViewGroup parent) {
+            return LayoutInflater.from(cotext).inflate(R.layout.dialog_view, parent, false);
+        }
 
-    }
+        @Override
+        public NoticeDialog.OnBindViewListener bindView() {
 
-    @Override
-    public NoticeDialog.OnBindViewListener bindView(final NoticeDialog dialog) {
 
-        return new NoticeDialog.OnBindViewListener() {
-            @Override
-            public void onCreated(View layout) {
-                //做一些view的必要处理，如点击事件，初始化等
-                 TextView tvTitle = layout.findViewById(R.id.notice_dialog_title);
-                //...
-            }
-        };
-    }
+
+            return new NoticeDialog.OnBindViewListener() {
+                @Override
+                public void onCreated(NoticeDialog dialog,final View layout) {
+
+                    dialog.backPressedHide(true);
+                    dialog.outsideTouchHide(false);
+
+                    dialog.backgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
+
+                    layout.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            EditText etNumber = layout.findViewById(R.id.et_number);
+                            Toast.makeText(MainActivity.this, "兑换码为：" + etNumber.getText(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            };
+        }
 }
 
 ```
 就像上面所说的那样，定义DialogController是为了方便管理View（或xml布局文件），notice-dialog并不强制你
 实现DialogController,毕竟我们是自由的，你可以用以下方式使用它。
 ```
-//demo
+NoticeDialog.create(this)
+        //设置使用的view xml
+        .view(R.layout.dialog_view, new NoticeDialog.OnBindViewListener() {
+            @Override
+            public void onCreated(NoticeDialog dialog,View layout) {
+                //初始化控件
+                EditText etNumber = layout.findViewById(R.id.et_number);
+                etNumber.setText("100866");
+            }
+        })
+        //点击事件
+        .click(R.id.btn_submit, new NoticeDialog.OnClickListener() {
+            @Override
+            public void onClick(View layout, View view) {
+
+                EditText etNumber = layout.findViewById(R.id.et_number);
+                Toast.makeText(MainActivity.this, "兑换码为：" + etNumber.getText(), Toast.LENGTH_SHORT).show();
+            }
+        })
+        .show();
 ```
 
 ### 4、管理我的Dialog

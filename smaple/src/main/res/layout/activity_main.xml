@@ -4,44 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f0f0f0"
     android:orientation="vertical"
+    android:padding="16dip"
     tools:context="com.sample.noticedialog.MainActivity">
 
     <Button
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_notice_alert_dialog"
         android:onClick="defalertDialog"
         android:text="Default AlertController"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textColor="#505050"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:background="@drawable/bg_notice_alert_dialog"
         android:onClick="progressDialog"
-        android:text="ProgressController(返回键可取消)"/>
+        android:text="ProgressController(返回键可取消)"
+        android:textColor="#505050"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:background="@drawable/bg_notice_alert_dialog"
         android:onClick="onCustomViewClick"
-        android:text="定义DialogController"/>
+        android:text="定义DialogController"
+        android:textColor="#505050"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:background="@drawable/bg_notice_alert_dialog"
         android:onClick="onCustomXmlViewClick"
-        android:text="xml view"/>
+        android:text="xml view"
+        android:textColor="#505050"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:background="@drawable/bg_notice_alert_dialog"
         android:onClick="onSmallPriorityClick"
-        android:text="低级别Dialog 请求弹出"/>
+        android:text="低级别Dialog 请求弹出"
+        android:textColor="#505050"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:background="@drawable/bg_notice_alert_dialog"
         android:onClick="onLargePriorityClick"
-        android:text="高级别Dialog 请求弹出"/>
+        android:text="高级别Dialog 请求弹出"
+        android:textColor="#505050"/>
 
 </LinearLayout>
