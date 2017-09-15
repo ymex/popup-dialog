@@ -25,7 +25,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
-import cn.ymex.notice.dialog.controller.DialogControlable;
+import cn.ymex.notice.dialog.controller.DialogControllable;
 
 
 /**
@@ -34,11 +34,12 @@ import cn.ymex.notice.dialog.controller.DialogControlable;
 
 public class NoticeDialog extends PopupWindow implements DialogManager.Priority {
 
+
     private ViewGroup mRootView;
     private View contextView;
     private Context mContext;
 
-    private DialogControlable dialogControlable;
+    private DialogControllable dialogControllable;
 
     private Animation inAnimation;
     private Animation outAnimation;
@@ -74,7 +75,7 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
             this.inAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_in);
         }
         this.outAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_out);
-        this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
+        this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
 
 
         this.setOutsideTouchable(backPressedHide);
@@ -190,12 +191,12 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
      * @param controlable
      * @return
      */
-    public NoticeDialog controller(DialogControlable controlable) {
+    public NoticeDialog controller(DialogControllable controlable) {
         if (controlable == null) {
             return this;
         }
-        dialogControlable = controlable;
-        return view(controlable.createView(this.mContext, this.mRootView), controlable.bindView(this));
+        dialogControllable = controlable;
+        return view(controlable.createView(this.mContext, this.mRootView), controlable.bindView());
     }
 
 
@@ -284,6 +285,7 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
         return this;
     }
 
+
     /**
      * 不建议使用，outsideTouchHide ,backPressedHide
      *
@@ -341,6 +343,28 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
 
 
     public void show() {
+        selfShow();
+    }
+
+
+    /**
+     * 以管理的方式展示
+     *
+     * @param manager
+     */
+    public void managerShow(DialogManager manager) {
+        if (manager == null) {
+            throw new IllegalArgumentException("DialogManager is null object!");
+        }
+        DialogManager.Priority p = manager.getPriority(this);
+        if (p == null) {
+            throw new IllegalArgumentException("this NoticeDialog is not in the DialogManager");
+        }
+
+        manager.show(this);
+    }
+
+    private void selfShow() {
         this.showAtLocation(mRootView, ViewGroup.LayoutParams.MATCH_PARENT, 0, 0);
         this.contextView.startAnimation(inAnimation);
     }
@@ -366,6 +390,7 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
         manager.add(this);
         return this;
     }
+
 
     @Override
     public void dismiss() {
@@ -396,7 +421,7 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
      * @param listener 监听
      * @return this
      */
-    public NoticeDialog click(@IdRes int id, View.OnClickListener listener) {
+    public NoticeDialog click(@IdRes int id, OnClickListener listener) {
         return click(id, listener, true);
     }
 
@@ -408,13 +433,13 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
      * @param dismiss  是否关闭弹窗
      * @return this
      */
-    public NoticeDialog click(@IdRes int id, final View.OnClickListener listener, final boolean dismiss) {
+    public NoticeDialog click(@IdRes int id, final OnClickListener listener, final boolean dismiss) {
 
         find(id).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onClick(view);
+                    listener.onClick(contextView, view);
                 }
                 if (dismiss) {
                     dismiss();
@@ -440,7 +465,7 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
 
     private void setBindViewListener(OnBindViewListener onBindViewListener) {
         if (onBindViewListener != null) {
-            onBindViewListener.onCreated(contextView);
+            onBindViewListener.onCreated(this, contextView);
         }
     }
 
@@ -469,16 +494,16 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
     @Override
     public void display() {
         if (!isShowing()) {
-            show();
+            selfShow();
         }
     }
 
     public interface OnBindViewListener {
-        void onCreated(View layout);
+        void onCreated(NoticeDialog dialog, View layout);
     }
 
-    public DialogControlable getDialogControlable() {
-        return dialogControlable;
+    public DialogControllable getDialogControllable() {
+        return dialogControllable;
     }
 
     class DocFrameLayout extends FrameLayout {
@@ -509,5 +534,9 @@ public class NoticeDialog extends PopupWindow implements DialogManager.Priority 
         void onShow(NoticeDialog var1);
     }
 
+
+    public interface OnClickListener {
+        void onClick(View layout, View view);
+    }
 }
 

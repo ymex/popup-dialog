@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="32dip"
+
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="16dip"
+    android:paddingLeft="32dip"
+    android:paddingRight="32dip"
+    android:paddingBottom="16dip">
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="兑换优惠券"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dip"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/et_number"
+        android:maxLines="1"
+        android:inputType="text"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:textColor="@color/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入兑换码"/>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:background="#F0F0F0"
+        android:text="兑换"
+        android:textColor="@drawable/selector_button_text"/>
+</LinearLayout>

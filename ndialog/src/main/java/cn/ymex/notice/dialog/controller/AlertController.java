@@ -18,7 +18,7 @@ import cn.ymex.notice.dialog.R;
  * 默认 Alert Dialog
  */
 
-public class AlertController implements DialogControlable {
+public class AlertController implements DialogControllable {
 
     private String mMsg;
     private String mTitle;
@@ -85,10 +85,10 @@ public class AlertController implements DialogControlable {
     }
 
     @Override
-    public NoticeDialog.OnBindViewListener bindView(final NoticeDialog dialog) {
+    public NoticeDialog.OnBindViewListener bindView() {
         return new NoticeDialog.OnBindViewListener() {
             @Override
-            public void onCreated(View layout) {
+            public void onCreated(final NoticeDialog dialog,View layout) {
                 dialog.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
 
                 TextView tvTitle = layout.findViewById(R.id.notice_dialog_title);

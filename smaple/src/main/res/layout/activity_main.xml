@@ -11,12 +11,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="defalertDialog"
-        android:text="alert dialog"/>
+        android:text="Default AlertController"
+        android:textAllCaps="false"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="progressDialog"
-        android:text="progress dialog"/>
+        android:text="ProgressController(返回键可取消)"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onCustomViewClick"
+        android:text="定义DialogController"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onCustomXmlViewClick"
+        android:text="xml view"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onSmallPriorityClick"
+        android:text="低级别Dialog 请求弹出"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onLargePriorityClick"
+        android:text="高级别Dialog 请求弹出"/>
 
 </LinearLayout>

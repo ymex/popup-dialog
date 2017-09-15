@@ -1,6 +1,8 @@
 package cn.ymex.notice.dialog.controller;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,7 @@ import cn.ymex.notice.dialog.R;
  * progress dialog
  */
 
-public class ProgressController implements DialogControlable {
+public class ProgressController implements DialogControllable {
     public static final int MODE_CIRCLE = 0x0;//android 4.0+ progressbar
     public static final int MODE_DOT = 0x1;
     public static final int MODE_SPOT = 0x2;
@@ -51,11 +53,12 @@ public class ProgressController implements DialogControlable {
     }
 
     @Override
-    public NoticeDialog.OnBindViewListener bindView(final NoticeDialog dialog) {
+    public NoticeDialog.OnBindViewListener bindView() {
 
         return new NoticeDialog.OnBindViewListener() {
             @Override
-            public void onCreated(View layout) {
+            public void onCreated(final NoticeDialog dialog, View layout) {
+                dialog.backgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
                 dialog.outsideTouchHide(false);
                 dialog.backPressedHide(true);
 

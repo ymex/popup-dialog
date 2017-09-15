@@ -109,6 +109,15 @@ public class DialogManager {
         return null;
     }
 
+    public Priority getPriority(Priority priority) {
+        for (Priority p : getDialogs()) {
+            if (p == priority) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     /**
      * 优先级
      */

@@ -10,8 +10,8 @@ import cn.ymex.notice.dialog.NoticeDialog;
  * Created by ymex on 2017/9/13.
  */
 
-public interface DialogControlable {
+public interface DialogControllable {
     View createView(Context cotext, ViewGroup parent);
 
-    NoticeDialog.OnBindViewListener bindView(NoticeDialog dialog);
+    NoticeDialog.OnBindViewListener bindView();
 }
