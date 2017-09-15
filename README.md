@@ -15,7 +15,7 @@ notice-dialog 实现自 PopupWindow,使用上更灵活，组件复用更便捷�
 
 ## 引入
 ```
-compile 'cn.ymex:notice-dialog:1.1.0'
+compile 'cn.ymex:notice-dialog:1.2.0'
 ```
   
 ## 使用
