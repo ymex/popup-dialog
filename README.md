@@ -39,6 +39,8 @@ AlertController在保持在系统AlertDialog基础上做到个人作为最好看
 
 ### 2、ProgressController
 
+![ProgressController](https://github.com/ymex/notice-dialog/blob/master/arts/default_progress.gif)
+
 ```
 NoticeDialog.create(this)
         .controller(ProgressController.build().message("loading ... "))
@@ -49,6 +51,9 @@ ProgressController 除了默认为系统风格的样式外还定义了其他两�
 方法去设置。
 
 ### 3、自定义DialogController
+
+![自定义DialogController](https://github.com/ymex/notice-dialog/blob/master/arts/custom_view.png)
+
 通过上面两种DialogController的使用相信你已经看出，这种设计模式。
 像你看到的那样,`NoticeDialog`只作为你要展示 view 的容器，它做的工作仅仅是把你的view展示到最上层和纳入可控的管理中（这个需要主动请求）。
 定义DialogController是为了方便管理View（或xml布局文件），只需要实现`DialogControlable`接口。如 ProgressController
@@ -113,6 +118,10 @@ NoticeDialog.create(this)
 ```
 
 ### 4、管理我的Dialog
+
+![管理我的Dialog](https://github.com/ymex/notice-dialog/blob/master/arts/low_p.gif)
+
+
 notice-dialog 实现了dialog管理，目前就实现一种管理方式，按优先级管理，这种管理方式只默认显示一个dialog，
 (1:)若新到来的dialog级别小于当前dialog则级别小的不显示。
 (2:)若新到来的dialog级别大于当前dialog则关闭当前dialog，显示级别大的dialog。
