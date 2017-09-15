@@ -2,7 +2,7 @@
 
 # notice-dialog
 
-灵活易用的、方便管理Dialog的库。
+继承自PopupWindow 实现灵活易用的Dialog ，并实现Dialog 的管理功能。Inherited from PopupWindow flexible and easy to use Dialog, and to achieve the management of Dialog function.
 
 ## 介绍
 Android 及 support 库的AlertDialog 组件样式 常常满足不了日常的开发使用，定义起来又烦琐。
@@ -24,7 +24,7 @@ compile 'cn.ymex:notice-dialog:1.1.0'
 其自定义功能能满足你的任何dialog 需求。
 
 ### 1、AlertController
-![AlertController](https://github.com/ymex/notice-dialog/blob/master/arts/alert_controller.png)
+
 ```
 NoticeDialog.create(this)
         .controller(AlertController.build()
@@ -35,11 +35,10 @@ NoticeDialog.create(this)
         .show();
 ```
 AlertController在保持在系统AlertDialog基础上做到个人作为最好看的样式。
-
+![AlertController](https://github.com/ymex/notice-dialog/blob/master/arts/alert_controller.png)
 
 ### 2、ProgressController
 
-![ProgressController](https://github.com/ymex/notice-dialog/blob/master/arts/default_progress.gif)
 
 ```
 NoticeDialog.create(this)
@@ -49,10 +48,11 @@ NoticeDialog.create(this)
 
 ProgressController 除了默认为系统风格的样式外还定义了其他两种样式,使用`model(ProgressController.MODE_CIRCLE)`
 方法去设置。
+![ProgressController](https://github.com/ymex/notice-dialog/blob/master/arts/default_progress.gif)
+
 
 ### 3、自定义DialogController
 
-![自定义DialogController](https://github.com/ymex/notice-dialog/blob/master/arts/custom_view.png)
 
 通过上面两种DialogController的使用相信你已经看出，这种设计模式。
 像你看到的那样,`NoticeDialog`只作为你要展示 view 的容器，它做的工作仅仅是把你的view展示到最上层和纳入可控的管理中（这个需要主动请求）。
@@ -117,9 +117,11 @@ NoticeDialog.create(this)
         .show();
 ```
 
+![自定义DialogController](https://github.com/ymex/notice-dialog/blob/master/arts/custom_view.png)
+
+
 ### 4、管理我的Dialog
 
-![管理我的Dialog](https://github.com/ymex/notice-dialog/blob/master/arts/low_p.gif)
 
 
 notice-dialog 实现了dialog管理，目前就实现一种管理方式，按优先级管理，这种管理方式只默认显示一个dialog，
@@ -136,6 +138,9 @@ notice-dialog 实现了dialog管理，目前就实现一种管理方式，按优
 ```
 
 注意：相同优先级的dialog 将被最后加入管理的与其相同优先级的dialog替换。
+
+![管理我的Dialog](https://github.com/ymex/notice-dialog/blob/master/arts/low_p.gif)
+
 
 ### 5、管理已经存在的Dialog
 notice-dialog 编写之初就考虑到这个问题，所以把它抽离出来作为接口。 只要实现`Priority`的类。你便可以放心的加入 到
