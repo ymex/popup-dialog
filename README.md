@@ -24,6 +24,7 @@ compile 'cn.ymex:notice-dialog:1.1.0'
 其自定义功能能满足你的任何dialog 需求。
 
 ### 1、AlertController
+![AlertController](https://github.com/ymex/notice-dialog/blob/master/arts/alert_controller.png)
 ```
 NoticeDialog.create(this)
         .controller(AlertController.build()
@@ -34,6 +35,7 @@ NoticeDialog.create(this)
         .show();
 ```
 AlertController在保持在系统AlertDialog基础上做到个人作为最好看的样式。
+
 
 ### 2、ProgressController
 
