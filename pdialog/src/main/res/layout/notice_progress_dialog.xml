@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_margin="@dimen/dialog_margin"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_notice_alert_dialog"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dip">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <cn.ymex.popup.widget.CircularProgressView
+                android:id="@id/notice_dialog_circle_progress"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                app:cpv_progress="50"/>
+
+            <TextView
+                android:id="@id/notice_dialog_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dip"
+                android:paddingRight="4dip"
+                android:text="@string/notice_dialog_loading"/>
+
+            <cn.ymex.popup.widget.DotProgressView
+                android:id="@id/notice_dialog_dot_progress"
+                android:layout_width="48dip"
+                android:layout_height="16dip"
+                app:amount="4"/>
+        </LinearLayout>
+
+        <cn.ymex.popup.widget.SpotsProgressView
+            android:id="@id/notice_dialog_spot_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

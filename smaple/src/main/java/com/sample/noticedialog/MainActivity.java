@@ -13,11 +13,11 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-import cn.ymex.notice.dialog.DialogManager;
-import cn.ymex.notice.dialog.NoticeDialog;
-import cn.ymex.notice.dialog.controller.AlertController;
-import cn.ymex.notice.dialog.controller.DialogControllable;
-import cn.ymex.notice.dialog.controller.ProgressController;
+import cn.ymex.popup.dialog.DialogManager;
+import cn.ymex.popup.dialog.PopupDialog;
+import cn.ymex.popup.dialog.controller.AlertController;
+import cn.ymex.popup.dialog.controller.DialogControllable;
+import cn.ymex.popup.dialog.controller.ProgressController;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,16 +66,16 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-        NoticeDialog.create(MainActivity.this)
+        PopupDialog.create(MainActivity.this)
                 .manageMe(manager)
                 .priority(SECOND_DIALOG)
                 .controller(alertController2);
 
-        NoticeDialog.create(MainActivity.this)
+        PopupDialog.create(MainActivity.this)
                 .priority(FIRST_DIALOG)
                 .manageMe(manager)
                 .controller(alertController);
-        NoticeDialog.create(this)
+        PopupDialog.create(this)
                 .manageMe(manager)
                 .priority(THREE_DIALOG)
                 .controller(alertController3);
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
      * 默认对话框
      */
     public void defalertDialog(View view) {
-        NoticeDialog.create(this)
+        PopupDialog.create(this)
                 .controller(AlertController.build()
                         .title("提醒")
                         .message("登录后才能评论。")
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 mode = ProgressController.MODE_SPOT;
                 break;
         }
-        NoticeDialog.create(this)
+        PopupDialog.create(this)
                 .controller(ProgressController.build().message("loading ... ")
                         .model(mode)).backgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")))
                 .show();
@@ -140,13 +140,13 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onLargePriorityClick(View view) {
         //修改DialogController
-        NoticeDialog noticeDialog = (NoticeDialog) manager.getPriority(FIRST_DIALOG);
+        PopupDialog popupDialog = (PopupDialog) manager.getPriority(FIRST_DIALOG);
 
-        AlertController alert = (AlertController) noticeDialog.getDialogControllable();
-        alert.title("提示").message("当前对话框(优先级：" + noticeDialog.priority() + ") 点击确定后，新的对话框(优先级：" + SECOND_DIALOG + ")将取代本对话框。");
+        AlertController alert = (AlertController) popupDialog.getDialogControllable();
+        alert.title("提示").message("当前对话框(优先级：" + popupDialog.priority() + ") 点击确定后，新的对话框(优先级：" + SECOND_DIALOG + ")将取代本对话框。");
 
-        noticeDialog.controller(alert);
-        noticeDialog.managerShow(manager);//等同 manager.show(FIRST_DIALOG); 或 manager.show(noticeDialog);
+        popupDialog.controller(alert);
+        popupDialog.managerShow(manager);//等同 manager.show(FIRST_DIALOG); 或 manager.show(popupDialog);
     }
 
     /**
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
         manager.show(THREE_DIALOG); //等同 manager.show(noticeDialog);
         //亦可使用以为弹出方式
-        //NoticeDialog noticeDialog = (NoticeDialog) manager.getPriority(THREE_DIALOG);
+        //PopupDialog noticeDialog = (PopupDialog) manager.getPriority(THREE_DIALOG);
         //noticeDialog.managerShow(manager);
 
 
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view v
      */
     public void onCustomViewClick(View view) {
-        NoticeDialog.create(this)
+        PopupDialog.create(this)
                 .controller(new CustomDialogController()).show();
     }
 
@@ -184,13 +184,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public NoticeDialog.OnBindViewListener bindView() {
+        public PopupDialog.OnBindViewListener bindView() {
 
 
 
-            return new NoticeDialog.OnBindViewListener() {
+            return new PopupDialog.OnBindViewListener() {
                 @Override
-                public void onCreated(NoticeDialog dialog,final View layout) {
+                public void onCreated(PopupDialog dialog, final View layout) {
 
                     dialog.backPressedHide(true);
                     dialog.outsideTouchHide(false);
@@ -215,18 +215,18 @@ public class MainActivity extends AppCompatActivity {
      * @param view v
      */
     public void onCustomXmlViewClick(View view) {
-        NoticeDialog.create(this)
+        PopupDialog.create(this)
                 //设置使用的view xml
-                .view(R.layout.dialog_view, new NoticeDialog.OnBindViewListener() {
+                .view(R.layout.dialog_view, new PopupDialog.OnBindViewListener() {
                     @Override
-                    public void onCreated(NoticeDialog dialog,View layout) {
+                    public void onCreated(PopupDialog dialog, View layout) {
                         //初始化控件
                         EditText etNumber = layout.findViewById(R.id.et_number);
                         etNumber.setText("100866");
                     }
                 })
                 //点击事件
-                .click(R.id.btn_submit, new NoticeDialog.OnClickListener() {
+                .click(R.id.btn_submit, new PopupDialog.OnClickListener() {
                     @Override
                     public void onClick(View layout, View view) {
 
