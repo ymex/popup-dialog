@@ -22,7 +22,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <cn.ymex.popup.widget.CircularProgressView
+            <cn.ymex.popup.view.CircularProgressView
                 android:id="@id/notice_dialog_circle_progress"
                 android:layout_width="32dip"
                 android:layout_height="32dip"
@@ -36,14 +36,14 @@
                 android:paddingRight="4dip"
                 android:text="@string/notice_dialog_loading"/>
 
-            <cn.ymex.popup.widget.DotProgressView
+            <cn.ymex.popup.view.DotProgressView
                 android:id="@id/notice_dialog_dot_progress"
                 android:layout_width="48dip"
                 android:layout_height="16dip"
                 app:amount="4"/>
         </LinearLayout>
 
-        <cn.ymex.popup.widget.SpotsProgressView
+        <cn.ymex.popup.view.SpotsProgressView
             android:id="@id/notice_dialog_spot_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

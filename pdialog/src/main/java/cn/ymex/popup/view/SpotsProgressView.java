@@ -1,4 +1,4 @@
-package cn.ymex.popup.widget;
+package cn.ymex.popup.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
-import cn.ymex.popup.dialog.R;
+import cn.ymex.popup.R;
 
 
 public class SpotsProgressView extends FrameLayout {

@@ -37,7 +37,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
-import cn.ymex.popup.dialog.controller.DialogControllable;
+import cn.ymex.popup.R;
+import cn.ymex.popup.controller.DialogControllable;
 
 /**
  * popupwindow

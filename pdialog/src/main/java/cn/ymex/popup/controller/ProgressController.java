@@ -1,4 +1,4 @@
-package cn.ymex.popup.dialog.controller;
+package cn.ymex.popup.controller;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cn.ymex.popup.dialog.PopupDialog;
-import cn.ymex.popup.dialog.R;
+import cn.ymex.popup.R;
 
 /**
  * progress dialog

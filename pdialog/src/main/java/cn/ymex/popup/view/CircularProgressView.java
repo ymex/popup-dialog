@@ -1,4 +1,4 @@
-package cn.ymex.popup.widget;
+package cn.ymex.popup.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -18,7 +18,7 @@ import android.view.animation.LinearInterpolator;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.ymex.popup.dialog.R;
+import cn.ymex.popup.R;
 
 
 /**

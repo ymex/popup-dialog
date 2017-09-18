@@ -1,4 +1,4 @@
-package cn.ymex.popup.widget;
+package cn.ymex.popup.view;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -22,7 +22,7 @@ import android.view.animation.Transformation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import cn.ymex.popup.dialog.R;
+import cn.ymex.popup.R;
 
 /**
  * @author Silvestr Predko.

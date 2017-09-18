@@ -1,4 +1,4 @@
-package cn.ymex.popup.dialog.controller;
+package cn.ymex.popup.controller;
 
 import android.content.Context;
 import android.view.View;

@@ -15,9 +15,9 @@ import java.util.Random;
 
 import cn.ymex.popup.dialog.DialogManager;
 import cn.ymex.popup.dialog.PopupDialog;
-import cn.ymex.popup.dialog.controller.AlertController;
-import cn.ymex.popup.dialog.controller.DialogControllable;
-import cn.ymex.popup.dialog.controller.ProgressController;
+import cn.ymex.popup.controller.AlertController;
+import cn.ymex.popup.controller.DialogControllable;
+import cn.ymex.popup.controller.ProgressController;
 
 public class MainActivity extends AppCompatActivity {
 
