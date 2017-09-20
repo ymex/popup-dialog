@@ -112,11 +112,11 @@ public class AlertController implements DialogControllable {
                     btnNegative.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (negativeListener != null) {
-                                negativeListener.onClick(btnNegative);
-                            }
                             if (dismiss) {
                                 dialog.dismiss();
+                            }
+                            if (negativeListener != null) {
+                                negativeListener.onClick(btnNegative);
                             }
                         }
                     });
@@ -134,12 +134,13 @@ public class AlertController implements DialogControllable {
                 btnPositive.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (positiveListener != null) {
-                            positiveListener.onClick(btnPositive);
-                        }
                         if (dismiss) {
                             dialog.dismiss();
                         }
+                        if (positiveListener != null) {
+                            positiveListener.onClick(btnPositive);
+                        }
+
                     }
                 });
 
