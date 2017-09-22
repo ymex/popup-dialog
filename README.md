@@ -133,8 +133,9 @@ popup-dialog 实现了dialog管理，目前就实现一种管理方式，按优�
  PopupDialog.create(this)
          .manageMe(manager)//使用 DialogManager 管理这个PopupDialog
          .priority(SECOND_DIALOG)//优先级
-         .controller(ProgressController.build().message("loading ... "))
-         .show();
+         .controller(ProgressController.build().message("loading ... "));
+         
+ manager.show(SECOND_DIALOG);//使用manager 显示此级别dialog
 ```
 
 注意：相同优先级的dialog 将被最后加入管理的与其相同优先级的dialog替换。
