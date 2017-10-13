@@ -1,15 +1,22 @@
-package cn.ymex.popup.dialog;
-/**
- * Copyright (c) 2015. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- * <p>
- * Email:ymex@foxmail.com  (www.ymex.cn)
+/*
+ * Copyright (C) 2016 ymex(www.ymex.cn)
  *
- * @author ymex
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Email:ymex@foxmail.com
  */
+
+package cn.ymex.popup.dialog;
 
 import android.util.Log;
 
@@ -134,13 +141,29 @@ public class DialogManager {
      * 优先级
      */
     public interface Priority {
-        int priority();//级别
+        /**
+         * 优先级
+         *
+         * @return 优先级
+         */
+        int priority();
 
-        boolean isWorking();//是否正在显示
+        /**
+         * 是否正在显示
+         *
+         * @return true 正在显示
+         */
+        boolean isWorking();
 
-        void hideAway();//隐藏
+        /**
+         * 隐藏窗口
+         */
+        void hideAway();
 
-        void display();//显示
+        /**
+         * 显示窗口
+         */
+        void display();
     }
 
     public void destroy() {
