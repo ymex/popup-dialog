@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void defalertDialog(View view) {
         PopupDialog.create(this)
+                .outsideTouchHide(false)
                 .controller(AlertController.build()
                         .title("提醒")
                         .message("登录后才能评论。")
