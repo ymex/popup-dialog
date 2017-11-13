@@ -102,14 +102,19 @@ public class AlertController implements DialogControllable {
         return LayoutInflater.from(context).inflate(R.layout.notice_alert_dialog, parent, false);
     }
 
+    private  <V extends View> V find(View view,int id) {
+        return (V)view.findViewById(id);
+    }
+
     @Override
     public PopupDialog.OnBindViewListener bindView() {
+
         return new PopupDialog.OnBindViewListener() {
             @Override
             public void onCreated(final PopupDialog dialog, View layout) {
                 dialog.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
 
-                TextView tvTitle = layout.findViewById(R.id.notice_dialog_title);
+                TextView tvTitle = find(layout,R.id.notice_dialog_title);
                 if (!TextUtils.isEmpty(mTitle)) {
                     tvTitle.setGravity(titleGravity);
                     tvTitle.setText(mTitle);
@@ -117,12 +122,12 @@ public class AlertController implements DialogControllable {
                 } else {
                     tvTitle.setVisibility(View.GONE);
                 }
-                TextView tvMessage = layout.findViewById(R.id.notice_dialog_message);
+                TextView tvMessage =  find(layout,R.id.notice_dialog_message);
                 tvMessage.setGravity(messageGravity);
                 tvMessage.setText(TextUtils.isEmpty(mMsg) ? "" : mMsg);
 
-                final Button btnNegative = layout.findViewById(R.id.notice_dialog_button_cancel);
-                View line = layout.findViewById(R.id.notice_dialog_divier_line);
+                final Button btnNegative =  find(layout,R.id.notice_dialog_button_cancel);
+                View line =  find(layout,R.id.notice_dialog_divier_line);
                 if (!TextUtils.isEmpty(negativeName)) {
                     line.setVisibility(View.VISIBLE);
                     btnNegative.setVisibility(View.VISIBLE);
