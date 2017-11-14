@@ -40,7 +40,7 @@ PopupDialog.create(this)
                 .positiveButton("确定", null))
         .show();
 ```
-AlertController在保持在系统AlertDialog样式的基础。
+AlertController在保持在系统AlertDialog样式的基础。<br>
 ![AlertController](https://github.com/ymex/popup-dialog/blob/master/arts/alert_controller.png)
 
 ### 2、ProgressController
