@@ -25,6 +25,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.AnimRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.IdRes;
@@ -44,6 +46,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
+import java.lang.ref.SoftReference;
+
 import cn.ymex.popup.R;
 import cn.ymex.popup.controller.DialogControllable;
 
@@ -53,11 +57,13 @@ import cn.ymex.popup.controller.DialogControllable;
 
 public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
+    private static final int MESSAGE_DISMISS = 0x00;
+    private static final int MESSAGE_SHOW = 0x10;
 
     private ViewGroup mRootView;
     private View contextView;
     private Context mContext;
-
+    private TimeHandler timeHandler;
     private DialogControllable dialogControllable;
 
     private Animation inAnimation;
@@ -66,6 +72,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     private boolean outsideTouchHide = true;
     private boolean backPressedHide = true;
+    private long dismissTime = -1;
 
 
     private PopupDialog(Context context) {
@@ -81,6 +88,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     private void init(Context context, @AnimRes int anim) {
         this.mContext = context;
+        this.timeHandler = new TimeHandler(this);
         this.mRootView = new DocFrameLayout(context);
 
 
@@ -120,6 +128,17 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     public PopupDialog clippingEnabled(boolean able) {
         this.setClippingEnabled(able);
+        return this;
+    }
+
+    /**
+     * 显示一定时间后消失
+     *
+     * @param time ms
+     * @return this
+     */
+    public PopupDialog dismissTime(long time) {
+        this.dismissTime = time;
         return this;
     }
 
@@ -395,6 +414,9 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
             onShowListener.onShow(this);
         }
         super.showAtLocation(parent, gravity, x, y);
+        if (dismissTime > 0) {
+            this.timeHandler.sendEmptyMessageDelayed(MESSAGE_DISMISS, dismissTime);
+        }
     }
 
     @Override
@@ -556,6 +578,23 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     public interface OnClickListener {
         void onClick(View layout, View view);
+    }
+
+
+    private static class TimeHandler extends Handler {
+        SoftReference<PopupDialog> refDialog;
+
+        public TimeHandler(PopupDialog dialog) {
+            this.refDialog = new SoftReference<PopupDialog>(dialog);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == MESSAGE_DISMISS && refDialog.get() != null && refDialog.get().isShowing()) {
+                refDialog.get().dismiss();
+            }
+        }
     }
 }
 

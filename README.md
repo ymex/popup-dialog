@@ -6,18 +6,24 @@
 
 ## 介绍
 Android 及 support 库的AlertDialog 组件样式 常常满足不了日常的开发使用，定义起来又烦琐。
-随着项目的需求增长，活动弹窗,升级弹窗，升级公告弹窗，乱七八糟的弹窗越来越多，引入dialog 管理就显的十分重要。
+随着项目的需求增长，活动弹窗,升级弹窗，升级公告弹窗，乱七八糟的弹窗越来越多，引入dialog 管理就显的十分必要。
 <br>
 popup-dialog 实现自 PopupWindow,使用上更灵活，组件复用更便捷。解决了PopupWindow返回键取消的问题，
-并引入Dialog管理机制。 
+并引入Dialog管理机制。
 <br>
 
 
 ## 引入
 ```
-compile 'cn.ymex:popup-dialog:1.2.2'
+compile 'cn.ymex:popup-dialog:1.2.3'
 ```
-  
+
+## 版本变更
+
+v1.2.3
+增加定时消失方法 dismissTime(ms)
+
+
 ## 使用
 
 为了方便 popup-dialog 默认实现的 AlertController(类似系统的AlertDialog)与 ProgressController(类似系统的ProgressDialog)。
@@ -34,7 +40,7 @@ PopupDialog.create(this)
                 .positiveButton("确定", null))
         .show();
 ```
-AlertController在保持在系统AlertDialog基础上做到个人作为最好看的样式。
+AlertController在保持在系统AlertDialog样式的基础。
 ![AlertController](https://github.com/ymex/popup-dialog/blob/master/arts/alert_controller.png)
 
 ### 2、ProgressController
