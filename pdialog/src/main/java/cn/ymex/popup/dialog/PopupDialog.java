@@ -403,8 +403,8 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
     }
 
     private void selfShow() {
-        this.showAtLocation(mRootView, ViewGroup.LayoutParams.MATCH_PARENT, 0, 0);
-        this.contextView.startAnimation(inAnimation);
+        showAtLocation(getContentView(), ViewGroup.LayoutParams.MATCH_PARENT, 0, 0);
+        contextView.startAnimation(inAnimation);
     }
 
 
@@ -453,6 +453,13 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
             }
         });
         this.contextView.startAnimation(outAnimation);
+    }
+
+    /**
+     * hase no Animation dismiss
+     */
+    public void forceDismiss() {
+        super.dismiss();
     }
 
     /**
