@@ -1,4 +1,4 @@
-package cn.ymex.popup.view;
+package cn.ymex.popup.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

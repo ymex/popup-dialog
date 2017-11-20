@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
+import cn.ymex.popup.controller.ToastController;
 import cn.ymex.popup.dialog.DialogManager;
 import cn.ymex.popup.dialog.PopupDialog;
 import cn.ymex.popup.controller.AlertController;
@@ -235,6 +236,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "兑换码为：" + etNumber.getText(), Toast.LENGTH_SHORT).show();
                     }
                 })
+                .show();
+    }
+
+    public void onToast( View view) {
+        PopupDialog.create(this).dismissTime(2*1000)
+                .controller(ToastController.build().setMessage("100000"))
                 .show();
     }
 }

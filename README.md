@@ -34,7 +34,7 @@ v1.2.3
 ```
 PopupDialog.create(this)
         .controller(AlertController.build()
-                .title("提醒")
+                .message("提醒")
                 .message("登录后才能评论。")
                 .negativeButton("取消", null)
                 .positiveButton("确定", null))

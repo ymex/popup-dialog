@@ -58,7 +58,7 @@ import cn.ymex.popup.controller.DialogControllable;
 public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     private static final int MESSAGE_DISMISS = 0x00;
-    private static final int MESSAGE_SHOW = 0x10;
+
 
     private ViewGroup mRootView;
     private View contextView;
@@ -110,6 +110,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
 
         setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         this.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
