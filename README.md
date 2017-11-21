@@ -15,12 +15,13 @@ popup-dialog 实现自 PopupWindow,使用上更灵活，组件复用更便捷。
 
 ## 引入
 ```
-compile 'cn.ymex:popup-dialog:1.2.3'
+compile 'cn.ymex:popup-dialog:1.2.4'
 ```
 
-## 版本变更
+## 最近版本变更
 
-v1.2.3
+v1.2.4
+增加 Toast 样式弹框
 增加定时消失方法 dismissTime(ms)
 
 
