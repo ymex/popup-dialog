@@ -38,9 +38,6 @@ public class ToastController implements DialogControllable {
     private int length = Toast.LENGTH_SHORT;
 
 
-    /**
-     * @hide
-     */
     @IntDef({Toast.LENGTH_SHORT, Toast.LENGTH_LONG})
     @Retention(RetentionPolicy.SOURCE)
     protected @interface Duration {
