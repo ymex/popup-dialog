@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onToast( View view) {
-        PopupDialog.create(this).dismissTime(2*1000)
+        PopupDialog.create(this)
                 .controller(ToastController.build().setMessage("100000"))
                 .show();
     }

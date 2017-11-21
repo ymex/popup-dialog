@@ -38,6 +38,7 @@ import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -104,28 +105,46 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
         this.outAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_out);
         this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
 
-
         this.setOutsideTouchable(backPressedHide);
         this.setFocusable(backPressedHide);
 
-
         setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        this.getContentView().setFocusableInTouchMode(true);
 
         this.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (outsideTouchHide) {
                     dismiss();
                 }
             }
         });
 
-
-        //this.mRootView.setFocusable(true);
-        this.getContentView().setFocusableInTouchMode(true);
-
     }
 
+
+    class DocFrameLayout extends FrameLayout {
+
+
+        public DocFrameLayout(@NonNull Context context) {
+            super(context);
+        }
+
+        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+    }
 
     public PopupDialog clippingEnabled(boolean able) {
         this.setClippingEnabled(able);
@@ -553,27 +572,6 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     public DialogControllable getDialogControllable() {
         return dialogControllable;
-    }
-
-    class DocFrameLayout extends FrameLayout {
-
-        public DocFrameLayout(@NonNull Context context) {
-            super(context);
-        }
-
-        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
-            super(context, attrs);
-        }
-
-        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
-            super(context, attrs, defStyleAttr);
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
-            super(context, attrs, defStyleAttr, defStyleRes);
-        }
-
     }
 
 
