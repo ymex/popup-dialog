@@ -18,8 +18,11 @@
 
 package cn.ymex.popup.dialog;
 
+import android.support.annotation.IntDef;
 import android.util.Log;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.LinkedList;
 
 
@@ -29,11 +32,26 @@ import java.util.LinkedList;
 
 public class DialogManager {
 
+    public final static int MODEL_SINGLETOP = 0x0;
+    //todo one by one 
+    public final static int MODEL_ONEBYONE = 0x1;
+
+    @IntDef({MODEL_SINGLETOP, MODEL_ONEBYONE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Model {
+    }
+
     private static final String TAG = "DialogManager";
 
     private LinkedList<Priority> dialogs;
+    private int showModel = MODEL_SINGLETOP;
 
     public DialogManager() {
+        this(MODEL_SINGLETOP);
+    }
+
+    public DialogManager(@Model int model) {
+        this.showModel = model;
         getDialogs();
     }
 
@@ -118,6 +136,7 @@ public class DialogManager {
             }
         }
     }
+
 
     public Priority getPriority(int priority) {
         for (Priority p : getDialogs()) {
