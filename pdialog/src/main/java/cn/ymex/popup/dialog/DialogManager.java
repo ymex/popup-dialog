@@ -33,7 +33,7 @@ import java.util.LinkedList;
 public class DialogManager {
 
     public final static int MODEL_SINGLETOP = 0x0;
-    //todo one by one 
+    //todo one by one
     public final static int MODEL_ONEBYONE = 0x1;
 
     @IntDef({MODEL_SINGLETOP, MODEL_ONEBYONE})
