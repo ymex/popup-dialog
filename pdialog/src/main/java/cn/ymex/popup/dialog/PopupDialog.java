@@ -424,9 +424,19 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     private void selfShow() {
         showAtLocation(getContentView(), ViewGroup.LayoutParams.MATCH_PARENT, 0, 0);
-        contextView.startAnimation(inAnimation);
     }
 
+    @Override
+    public void showAsDropDown(View anchor, int xoff, int yoff) {
+        if (onShowListener != null) {
+            onShowListener.onShow(this);
+        }
+        super.showAsDropDown(anchor, xoff, yoff);
+        if (dismissTime > 0) {
+            this.timeHandler.sendEmptyMessageDelayed(MESSAGE_DISMISS, dismissTime);
+        }
+        contextView.startAnimation(inAnimation);
+    }
 
     @Override
     public void showAtLocation(View parent, int gravity, int x, int y) {
@@ -437,6 +447,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
         if (dismissTime > 0) {
             this.timeHandler.sendEmptyMessageDelayed(MESSAGE_DISMISS, dismissTime);
         }
+        contextView.startAnimation(inAnimation);
     }
 
     @Override
