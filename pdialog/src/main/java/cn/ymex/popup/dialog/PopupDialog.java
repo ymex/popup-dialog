@@ -37,8 +37,8 @@ import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -69,6 +69,8 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     private Animation inAnimation;
     private Animation outAnimation;
+
+    private int animationStyleRes;
     private int mPriority = 0;//弹出优先级
 
     private boolean outsideTouchHide = true;
@@ -77,32 +79,30 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
 
     private PopupDialog(Context context) {
-        this(context, R.anim.pulse_modal_in);
+        this(context, -1);
     }
 
 
-    private PopupDialog(Context context, @AnimRes int anim) {
+    private PopupDialog(Context context, @StyleRes int anim) {
         super(context);
         this.init(context, anim);
     }
 
 
-    private void init(Context context, @AnimRes int anim) {
+    private void init(Context context, @StyleRes int anim) {
         this.mContext = context;
         this.timeHandler = new TimeHandler(this);
         this.mRootView = new DocFrameLayout(context);
 
-
+        this.setAnimationStyle(anim);
         this.setContentView(this.mRootView);
         this.setClippingEnabled(false);
         this.setWidth(FrameLayout.LayoutParams.MATCH_PARENT);
         this.setHeight(FrameLayout.LayoutParams.MATCH_PARENT);
-        try {
-            this.inAnimation = AnimationUtils.loadAnimation(context, anim);
-        } catch (Exception e) {
-            this.inAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_in);
-        }
+
+        this.inAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_in);
         this.outAnimation = AnimationUtils.loadAnimation(context, R.anim.pulse_modal_out);
+
         this.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66000000")));
 
         this.setOutsideTouchable(backPressedHide);
@@ -279,6 +279,18 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
         return this;
     }
 
+
+    /**
+     * 动画
+     *
+     * @param animationStyle animationStyle
+     * @return
+     */
+    public PopupDialog animationStyle(@StyleRes int animationStyle) {
+        super.setAnimationStyle(animationStyle);
+        return this;
+    }
+
     /**
      * show 动画
      *
@@ -428,14 +440,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     @Override
     public void showAsDropDown(View anchor, int xoff, int yoff) {
-        if (onShowListener != null) {
-            onShowListener.onShow(this);
-        }
-        super.showAsDropDown(anchor, xoff, yoff);
-        if (dismissTime > 0) {
-            this.timeHandler.sendEmptyMessageDelayed(MESSAGE_DISMISS, dismissTime);
-        }
-        contextView.startAnimation(inAnimation);
+        showAsDropDown(anchor, xoff, yoff, Gravity.TOP | Gravity.START);
     }
 
     @Override
@@ -444,10 +449,16 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
             onShowListener.onShow(this);
         }
         super.showAtLocation(parent, gravity, x, y);
+        afterShow();
+    }
+
+    private void afterShow() {
         if (dismissTime > 0) {
             this.timeHandler.sendEmptyMessageDelayed(MESSAGE_DISMISS, dismissTime);
         }
-        contextView.startAnimation(inAnimation);
+        if (inAnimation != null) {
+            contextView.startAnimation(inAnimation);
+        }
     }
 
     @Override
@@ -456,6 +467,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
             onShowListener.onShow(this);
         }
         super.showAsDropDown(anchor, xoff, yoff, gravity);
+        afterShow();
     }
 
     public PopupDialog manageMe(DialogManager manager) {
@@ -466,7 +478,6 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     @Override
     public void dismiss() {
-
         outAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -483,7 +494,9 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
             }
         });
-        this.contextView.startAnimation(outAnimation);
+        if (outAnimation != null) {
+            this.contextView.startAnimation(outAnimation);
+        }
     }
 
     /**

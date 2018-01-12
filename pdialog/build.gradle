@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 125
-        versionName "1.2.5"
+        versionCode 126
+        versionName "1.2.6"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -37,7 +37,7 @@ publish {
     userOrg = 'ymex'
     groupId = 'cn.ymex'
     artifactId = 'popup-dialog'
-    publishVersion = '1.2.5'
+    publishVersion = '1.2.6'
     desc = 'notice widget for Android'
     website = 'https://github.com/ymex/popup-dialog'
 }

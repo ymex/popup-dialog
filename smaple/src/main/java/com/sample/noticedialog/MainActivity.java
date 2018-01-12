@@ -176,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onCustomViewClick(View view) {
         PopupDialog.create(this)
+                .animationIn(R.anim.push_in)
+                .animationOut(R.anim.push_out)
                 .controller(new CustomDialogController()).show();
     }
 
