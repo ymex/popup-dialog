@@ -19,6 +19,7 @@ compile 'cn.ymex:popup-dialog:1.2.7'
 ```
 
 ## 最近版本变更
+
 v1.2.7
 增加不遮挡虚拟导航的compatShow
 OnClickListener增加dialog 参数
@@ -26,8 +27,6 @@ OnClickListener增加dialog 参数
 v1.2.6
 修复动画重复问题
 重载相关方法
-
-v1.2.4
 增加 Toast 样式弹框
 增加定时消失方法 dismissTime(ms)
 
@@ -160,6 +159,10 @@ popup-dialog 实现了dialog管理，目前就实现一种管理方式，按优�
 ### 5、管理已经存在的Dialog
 popup-dialog 编写之初就考虑到这个问题，所以把它抽离出来作为接口。 只要实现`Priority`的类。你便可以放心的加入 到
 DialogManage中接收管理。
+
+
+## 已知问题：
+1、popdialog 中的EditText无法进行复制与粘贴。
 
 License
 -------
