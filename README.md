@@ -15,10 +15,14 @@ popup-dialog 实现自 PopupWindow,使用上更灵活，组件复用更便捷。
 
 ## 引入
 ```
-compile 'cn.ymex:popup-dialog:1.2.6'
+compile 'cn.ymex:popup-dialog:1.2.7'
 ```
 
 ## 最近版本变更
+v1.2.7
+增加不遮挡虚拟导航的compatShow
+OnClickListener增加dialog 参数
+
 v1.2.6
 修复动画重复问题
 重载相关方法
@@ -118,7 +122,7 @@ PopupDialog.create(this)
         //点击事件
         .click(R.id.btn_submit, new PopupDialog.OnClickListener() {
             @Override
-            public void onClick(View layout, View view) {
+            public void onClick(PopupDialog dialog,View layout, View view) {
 
                 EditText etNumber = layout.findViewById(R.id.et_number);
                 Toast.makeText(MainActivity.this, "兑换码为：" + etNumber.getText(), Toast.LENGTH_SHORT).show();

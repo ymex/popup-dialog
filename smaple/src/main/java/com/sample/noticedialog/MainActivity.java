@@ -13,12 +13,12 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-import cn.ymex.popup.controller.ToastController;
-import cn.ymex.popup.dialog.DialogManager;
-import cn.ymex.popup.dialog.PopupDialog;
 import cn.ymex.popup.controller.AlertController;
 import cn.ymex.popup.controller.DialogControllable;
 import cn.ymex.popup.controller.ProgressController;
+import cn.ymex.popup.controller.ToastController;
+import cn.ymex.popup.dialog.DialogManager;
+import cn.ymex.popup.dialog.PopupDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 //点击事件
                 .click(R.id.btn_submit, new PopupDialog.OnClickListener() {
                     @Override
-                    public void onClick(View layout, View view) {
+                    public void onClick(PopupDialog dialog, View layout, View view) {
 
                         EditText etNumber = layout.findViewById(R.id.et_number);
                         Toast.makeText(MainActivity.this, "兑换码为：" + etNumber.getText(), Toast.LENGTH_SHORT).show();
@@ -241,9 +241,17 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void onToast( View view) {
+    public void onToast(View view) {
         PopupDialog.create(this)
                 .controller(ToastController.build().setMessage("100000"))
                 .show();
+    }
+
+
+    public void onShowPhoto(View view) {
+        PopupDialog.create(this)
+                .animationIn(R.anim.push_in).animationOut(R.anim.push_out)
+                .view(R.layout.dialog_photo)
+                .compatShow(this);
     }
 }

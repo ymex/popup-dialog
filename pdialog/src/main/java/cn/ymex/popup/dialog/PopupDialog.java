@@ -50,6 +50,7 @@ import android.widget.PopupWindow;
 import java.lang.ref.SoftReference;
 
 import cn.ymex.popup.R;
+import cn.ymex.popup.compat.Tool;
 import cn.ymex.popup.controller.DialogControllable;
 
 /**
@@ -76,6 +77,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
     private boolean outsideTouchHide = true;
     private boolean backPressedHide = true;
     private long dismissTime = -1;
+    private OnShowListener onShowListener;
 
 
     private PopupDialog(Context context) {
@@ -88,6 +90,20 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
         this.init(context, anim);
     }
 
+    public static PopupDialog create(Context context) {
+        if (!(context instanceof Activity)) {
+            throw new IllegalArgumentException("context is an invalid type!");
+        }
+        return new PopupDialog(context);
+    }
+
+    public static PopupDialog create(Fragment fragment) {
+        return create(fragment.getActivity());
+    }
+
+    public static PopupDialog create(android.app.Fragment fragment) {
+        return create(fragment.getActivity());
+    }
 
     private void init(Context context, @StyleRes int anim) {
         this.mContext = context;
@@ -120,29 +136,6 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
                 }
             }
         });
-
-    }
-
-
-    class DocFrameLayout extends FrameLayout {
-
-
-        public DocFrameLayout(@NonNull Context context) {
-            super(context);
-        }
-
-        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
-            super(context, attrs);
-        }
-
-        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
-            super(context, attrs, defStyleAttr);
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
-            super(context, attrs, defStyleAttr, defStyleRes);
-        }
 
     }
 
@@ -206,23 +199,6 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
     public <T extends View> T find(@IdRes int id) {
         return (T) contextView.findViewById(id);
     }
-
-
-    public static PopupDialog create(Context context) {
-        if (!(context instanceof Activity)) {
-            throw new IllegalArgumentException("context is an invalid type!");
-        }
-        return new PopupDialog(context);
-    }
-
-    public static PopupDialog create(Fragment fragment) {
-        return create(fragment.getActivity());
-    }
-
-    public static PopupDialog create(android.app.Fragment fragment) {
-        return create(fragment.getActivity());
-    }
-
 
     /**
      * 添加布局
@@ -531,7 +507,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onClick(contextView, view);
+                    listener.onClick(PopupDialog.this, contextView, view);
                 }
                 if (dismiss) {
                     dismiss();
@@ -590,26 +566,22 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
         }
     }
 
-    public interface OnBindViewListener {
-        void onCreated(PopupDialog dialog, View layout);
-    }
-
     public DialogControllable getDialogControllable() {
         return dialogControllable;
     }
 
+    public interface OnBindViewListener {
+        void onCreated(PopupDialog dialog, View layout);
+    }
 
-    private OnShowListener onShowListener;
 
     public interface OnShowListener {
         void onShow(PopupDialog var1);
     }
 
-
     public interface OnClickListener {
-        void onClick(View layout, View view);
+        void onClick(PopupDialog dialog, View layout, View view);
     }
-
 
     private static class TimeHandler extends Handler {
         SoftReference<PopupDialog> refDialog;
@@ -625,6 +597,36 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
                 refDialog.get().dismiss();
             }
         }
+    }
+
+    class DocFrameLayout extends FrameLayout {
+
+
+        public DocFrameLayout(@NonNull Context context) {
+            super(context);
+        }
+
+        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        public DocFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+    }
+
+    /**
+     * 不遮挡虚拟导航（华为等带有虚拟导航的机型）
+     * @param act
+     */
+    public void compatShow(Activity  act) {
+        this.showAtLocation(act.getWindow().getDecorView(), Gravity.BOTTOM, 0, Tool.getNavigationBarHeight(act));
     }
 }
 

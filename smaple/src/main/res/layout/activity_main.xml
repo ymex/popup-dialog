@@ -72,4 +72,13 @@
         android:onClick="onToast"
         android:text="Toast dialog"
         android:textColor="#505050" />
+
+    <Button
+        android:textColor="#505050"
+        android:layout_marginTop="8dip"
+        android:text="底部弹出兼容虚拟导航"
+        android:background="@drawable/bg_notice_alert_dialog"
+        android:layout_width="match_parent"
+        android:onClick="onShowPhoto"
+        android:layout_height="wrap_content" />
 </LinearLayout>
