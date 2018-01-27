@@ -18,18 +18,6 @@ popup-dialog 实现自 PopupWindow,使用上更灵活，组件复用更便捷。
 compile 'cn.ymex:popup-dialog:1.2.7'
 ```
 
-## 最近版本变更
-
-v1.2.7
-增加不遮挡虚拟导航的compatShow
-OnClickListener增加dialog 参数
-
-v1.2.6
-修复动画重复问题
-重载相关方法
-增加 Toast 样式弹框
-增加定时消失方法 dismissTime(ms)
-
 
 ## 使用
 
@@ -161,8 +149,31 @@ popup-dialog 编写之初就考虑到这个问题，所以把它抽离出来作�
 DialogManage中接收管理。
 
 
+
+## 最近版本变更
+
+v1.2.7
+
+增加不遮挡虚拟导航的compatShow
+
+OnClickListener增加dialog 参数
+
+v1.2.6
+
+修复动画重复问题
+
+重载相关方法
+
+增加 Toast 样式弹框
+
+增加定时消失方法 dismissTime(ms)
+
 ## 已知问题：
+
 1、popdialog 中的EditText无法进行复制与粘贴。
+
+
+
 
 License
 -------
