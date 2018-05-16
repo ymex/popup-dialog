@@ -32,11 +32,10 @@ import java.util.LinkedList;
 
 public class DialogManager {
 
-    public final static int MODEL_SINGLETOP = 0x0;
-    //todo one by one
-    public final static int MODEL_ONEBYONE = 0x1;
+    public final static int MODEL_SINGLE_TOP = 0x0;
+    public final static int MODEL_ONE_BY_ONE = 0x1;
 
-    @IntDef({MODEL_SINGLETOP, MODEL_ONEBYONE})
+    @IntDef({MODEL_SINGLE_TOP, MODEL_ONE_BY_ONE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Model {
     }
@@ -44,10 +43,10 @@ public class DialogManager {
     private static final String TAG = "DialogManager";
 
     private LinkedList<Priority> dialogs;
-    private int showModel = MODEL_SINGLETOP;
+    private int showModel = MODEL_SINGLE_TOP;
 
     public DialogManager() {
-        this(MODEL_SINGLETOP);
+        this(MODEL_SINGLE_TOP);
     }
 
     public DialogManager(@Model int model) {
@@ -55,7 +54,7 @@ public class DialogManager {
         getDialogs();
     }
 
-    public LinkedList<Priority> getDialogs() {
+    private LinkedList<Priority> getDialogs() {
         if (dialogs == null) {
             dialogs = new LinkedList<>();
         }
@@ -71,8 +70,25 @@ public class DialogManager {
      */
     public DialogManager add(Priority dialog) {
 
+        switch (showModel) {
+            case MODEL_SINGLE_TOP:
+                _add_SingleTop(dialog);
+                break;
+            case MODEL_ONE_BY_ONE:
+                _add_oneByone(dialog);
+                break;
+        }
+
+        return this;
+    }
+
+    private void _add_oneByone(Priority dialog) {
+        getDialogs().add(dialog);
+    }
+
+    private void _add_SingleTop(Priority dialog) {
         if (dialogs.contains(dialog)) {
-            return this;
+            return;
         }
         int index = -1;
         for (int i = 0; i < getDialogs().size(); i++) {
@@ -94,10 +110,18 @@ public class DialogManager {
         } else {
             getDialogs().add(dialog);
         }
-
-
-        return this;
     }
+
+
+//    public synchronized void show() {
+//        if (showModel != MODEL_ONE_BY_ONE || getDialogs().size() == 0) {
+//            return;
+//        }
+//        Priority dialog = getDialogs().getFirst();
+//        if (!dialog.isWorking()) {
+//            dialog.display();
+//        }
+//    }
 
     public void show(int priority) {
         Priority p = getPriority(priority);
