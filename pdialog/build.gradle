@@ -4,11 +4,10 @@ apply plugin: 'com.novoda.bintray-release' // must be applied after your artifac
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
         versionCode 127
         versionName "1.2.7"
 
@@ -24,12 +23,12 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    provided 'com.android.support:appcompat-v7:26.+'
-    testCompile 'junit:junit:4.12'
+    compileOnly 'com.android.support:appcompat-v7:26.+'
+    testImplementation 'junit:junit:4.12'
 }
 
 
