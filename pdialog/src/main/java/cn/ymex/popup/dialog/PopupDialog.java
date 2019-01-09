@@ -470,7 +470,7 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
             }
         });
-        if (outAnimation != null) {
+        if (outAnimation != null && this.contextView != null) {
             this.contextView.startAnimation(outAnimation);
         }
     }
@@ -623,9 +623,10 @@ public class PopupDialog extends PopupWindow implements DialogManager.Priority {
 
     /**
      * 不遮挡虚拟导航（华为等带有虚拟导航的机型）
+     *
      * @param act
      */
-    public void compatShow(Activity  act) {
+    public void compatShow(Activity act) {
         this.showAtLocation(act.getWindow().getDecorView(), Gravity.BOTTOM, 0, Tool.getNavigationBarHeight(act));
     }
 }
