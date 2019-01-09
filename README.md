@@ -15,7 +15,7 @@ popup-dialog 实现自 PopupWindow,使用上更灵活，组件复用更便捷。
 
 ## 引入
 ```
-compile 'cn.ymex:popup-dialog:1.2.7'
+compile 'cn.ymex:popup-dialog:1.2.8'
 ```
 
 
@@ -151,7 +151,8 @@ DialogManage中接收管理。
 
 
 ## 最近版本变更
-
+v1.2.8
+修复：某些情况下空异常
 v1.2.7
 
 增加不遮挡虚拟导航的compatShow
